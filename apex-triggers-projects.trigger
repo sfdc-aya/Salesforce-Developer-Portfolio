@@ -34,8 +34,8 @@ trigger OpptyStage on Opportunity (before update) {
 }
 
 
-3. Send Email Alert to oppty Owners when Amount is => $1M
-Use case: Build a trigger that sends email notifications to designated users when specific events or changes occur in Salesforce, such as a high-priority case being created or an opportunity reaching a certain stage.
+3. Send Email Alert to Oppty Owners (Opportunity Obj)
+Use case: Build a trigger that sends email notifications to designated users when  when Amount is => $1M.
 
 trigger SendEmailAlert on Opportunity (after update) {
     Set<ID> bigdealOppties = new Set<ID>();
@@ -75,7 +75,23 @@ trigger SendEmailAlert on Opportunity (after update) {
 }
 
 
-4.
+4. Auto Populate Email for Contacts (Contact obj)
+Use case: if the user doesn't provide an email address, then auto-populate it for them.
+
+trigger AutoPopulateContactEmail on Contact (before insert) {
+    if(Trigger.isExecuting && Trigger.isBefore && Trigger.isInsert){
+        for(Contact c : Trigger.new){
+            if(c.Email == null){
+                c.Email = c.FirstName + c.LastName+'@gmail.com';
+            }
+        }
+    }
+}
+
+
+5.Prevent Dup Contact records (Contact obj)
+User case: if dup contact is being inserted throw an error to prevent it.
+
 
 
 
