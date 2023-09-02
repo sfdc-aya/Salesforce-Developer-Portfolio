@@ -1,4 +1,4 @@
-# Salesforce-Apex-Portfolio
+# Salesforce-Developer-Portfolio
 Includes different business scenarios where Salesforce Apex is utilized to solve business problems through automation and manipulating data from the database.
 
 Introduction:
