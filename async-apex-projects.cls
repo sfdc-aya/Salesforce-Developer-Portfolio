@@ -22,9 +22,13 @@ public class BatchDataCleanup implements Database.Batchable <sObject> {
     }
 }
 
+//to invoke the above class through Anonymous Window:
+BatchDataCleanup bc = new BatchDataCleanup();
+Database.executeBatch(bc);
+
 
 2. Send Mass Email Notifications to users when Opptie is closed.
-Use case: develop a program that sends mass email to opptie owners when opptie stage is closed won.
+Use case: Develop a program that sends mass emails to opptie owners when opptie stage is closed won.
 
 public class BulkEmailAlert implements Queueable{
     List<Opportunity> opList;
@@ -72,4 +76,41 @@ public class BulkEmailAlert implements Queueable{
         }
     }
 }
+
+//to invoke the above class through Anonymous Window:
+BulkEmailAlert be = new BulkEmailAlert();
+System.enqueueJob(be);
+
+
+3.Schedule a Data Update (Account Obj)
+Use case: Update account description when the Industry is Apparel.
+
+global class ScheduleDataUpdate implements Schedulable{
+   
+    global void execute(SchedulableContext sc){
+        List<Account> updateList = [SELECT Id, Description FROM Account WHERE Industry = 'Apparel' LIMIT 100];
+        
+        if (updateList.size() > 0) {
+            for (Account a : updateList) {
+                a.Description = 'Apparel account has been updated';
+            }
+            
+            try {
+                update updateList;
+            } catch (Exception e) {
+                System.debug('An error occurred while updating records: ' + e.getMessage());
+            }
+            
+            System.debug('Updated ' + updateList.size() + ' Apparel Accounts.');
+        }
+    }
+}
+
+//to invoke the above class through Anonymous Window:
+String cronExp = '0 0 0 * * ?'; 
+System.schedule('ScheduledDataUpdate Job', cronExp, new ScheduleDataUpdate());
+
+
+4.
+
 
