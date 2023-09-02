@@ -23,8 +23,8 @@ public class BatchDataCleanup implements Database.Batchable <sObject> {
 }
 
 
-2. Send Mass Email Notifications or alerts to users or stakeholders when Opptie stage is closed Won.
-Use case: 
+2. Send Mass Email Notifications to users when Opptie is closed.
+Use case: develop a program that sends mass email to opptie owners when opptie stage is closed won.
 
 public class BulkEmailAlert implements Queueable{
     List<Opportunity> opList;
