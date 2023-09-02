@@ -16,9 +16,12 @@ Salesforce Development (2.5 Years):
 What You'll Find in This Repository:
 In this portfolio, I've curated a collection of Salesforce Apex projects and other Salesforce-related developments that showcase my skills and experience. Visitors to this repository can expect to find:
 
-      Apex Triggers ./apex-class-projects: I've crafted Apex triggers to automate various processes within Salesforce. Each trigger comes with documentation explaining its purpose, functionality, and deployment instructions.
-      Async Apex: Explore examples of asynchronous Apex code that I've created to handle time-consuming tasks efficiently, such as batch, scheduler, queueable processing, and future methods.
-      Apex Classes : Dive into the world of custom Apex classes that I've built to extend Salesforce's capabilities and meet specific business requirements.
+      apex-triggers-projects: I've crafted Apex triggers to automate various processes within Salesforce. Each trigger comes with documentation explaining its purpose, functionality, and deployment instructions.
+      
+      async-apex-projects: Explore examples of asynchronous Apex code that I've created to handle time-consuming tasks efficiently, such as batch, scheduler, queueable processing, and future methods.
+      
+      apex-class-projects: Dive into the world of custom Apex classes that I've built to extend Salesforce's capabilities and meet specific business requirements.
+      
       Project Documentation: I've provided detailed project documentation for each item, including usage guidelines and explanations of how they address real-world business challenges.
 
 I invite you to explore my portfolio, review the code, and reach out with any questions or collaboration opportunities. Thank you for visiting, and I look forward to connecting with you!
