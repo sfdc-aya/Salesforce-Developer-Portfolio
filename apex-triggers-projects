@@ -1,5 +1,5 @@
 1. Lead Assignment Trigger (Lead Obj)
-Use case: auto-assign newly generated and existing leads to a support user, based on the business logic. 
+Use case: Develop a trigger to auto-assign newly generated and existing leads to a support user, based on the business logic. 
 
 trigger LeadAssignMent on Lead (before insert, before update) {
     if(Trigger.isExecuting && Trigger.isBefore && Trigger.isInsert){ 
@@ -17,5 +17,21 @@ trigger LeadAssignMent on Lead (before insert, before update) {
         }
     }
 }
+
+2. Opportunity Stage Automation (Opportunity Obj)
+Use case: Develop a trigger that automates the progression of opportunity stages based on specific conditions such as opportunity amount.
+
+trigger OpptyStage on Opportunity (before update) {    
+    if(Trigger.isExecuting && Trigger.isbefore && Trigger.isUpdate){
+        for(Opportunity o : Trigger.new){
+            if(o.Amount == 1000000 ){
+                o.StageName = 'Closed Won';
+                o.Description = 'Oppty has been closed with an amount of $1M, Good Job '+ o.Owner.Name;
+            }
+        }   
+    }
+}
+
+
 
 
