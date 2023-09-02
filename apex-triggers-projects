@@ -18,6 +18,7 @@ trigger LeadAssignMent on Lead (before insert, before update) {
     }
 }
 
+
 2. Opportunity Stage Automation (Opportunity Obj)
 Use case: Develop a trigger that automates the progression of opportunity stages based on specific conditions such as opportunity amount.
 
@@ -31,6 +32,65 @@ trigger OpptyStage on Opportunity (before update) {
         }   
     }
 }
+
+
+3. Send Email Alert to oppty Owners when Amount is => $1M
+Use case: Build a trigger that sends email notifications to designated users when specific events or changes occur in Salesforce, such as a high-priority case being created or an opportunity reaching a certain stage.
+
+trigger SendEmailAlert on Opportunity (after update) {
+    Set<ID> bigdealOppties = new Set<ID>();
+    List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+    
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isUpdate){
+        for(Opportunity o : Trigger.new){
+            if(o.Amount == 1000002){
+                bigdealOppties.add(o.OwnerId);
+            }
+        }
+    }
+    List<User> owners = [Select Id, Email, Name from User where Id  in : bigdealOppties];
+    
+    for(User u : owners){
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        mail.toaddresses = new String[] {u.Email};
+        mail.setSenderDisplayName('Salesforce Administrator');
+        mail.setSubject('Big Deal Alert');
+        
+        mail.setBccSender(false);
+        mail.setSaveAsActivity(false);
+        String body = 'Dear, Opportunity Owner';
+        body    += 'Your opportunity have generated a more than $1M dollars! Yaay! '+u.Name;
+        mail.setHtmlBody(body);
+        
+        emails.add(mail);
+    }
+    if(emails.size()>0){
+        Messaging.SendEmailResult[] result = Messaging.sendEmail(emails);
+        for(Messaging.SendEmailResult sr : result){
+            if(!sr.isSuccess()){
+                System.debug('There was an error during the email sending process '+ sr.getErrors());
+            }
+        }
+    }
+}
+
+
+4.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
