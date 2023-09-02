@@ -1,1 +1,21 @@
+1. Lead Assignment Trigger (Lead Obj)
+Use case: auto-assign newly generated and existing leads to a support user, based on the business logic. 
+
+trigger LeadAssignMent on Lead (before insert, before update) {
+    if(Trigger.isExecuting && Trigger.isBefore && Trigger.isInsert){
+        for(Lead l : Trigger.new){
+            if(l.Industry == 'Banking' && l.Status == 'Open - Not Contacted'){
+                l.OwnerId = '0058b00000Hg415AAB';
+            }
+        }
+    }
+    if(Trigger.isExecuting && Trigger.isBefore && Trigger.isUpdate){
+        for(Lead l : Trigger.new){
+             if(l.Industry == 'Banking' && l.Status == 'Working - Contacted' && Trigger.oldMap.get(l.id).Industry != 'Banking'){
+                l.OwnerId = '0058b00000Hg415AAB';
+             }
+        }
+    }
+}
+
 
