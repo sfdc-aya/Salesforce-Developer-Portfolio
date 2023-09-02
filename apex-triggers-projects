@@ -1,7 +1,7 @@
 1. Lead Assignment Trigger (Lead Obj)
 Use case: Develop a trigger to auto-assign newly generated and existing leads to a support user, based on the business logic. 
 
-//trigger LeadAssignMent on Lead (before insert, before update) {
+trigger LeadAssignMent on Lead (before insert, before update) {
     if(Trigger.isExecuting && Trigger.isBefore && Trigger.isInsert){ 
         for(Lead l : Trigger.new){
             if(l.Industry == 'Banking' && l.Status == 'Open - Not Contacted'){
