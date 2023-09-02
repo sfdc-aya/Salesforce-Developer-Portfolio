@@ -92,6 +92,37 @@ trigger AutoPopulateContactEmail on Contact (before insert) {
 5.Prevent Dup Contact records (Contact obj)
 User case: if dup contact is being inserted throw an error to prevent it.
 
+trigger PreventDups on Contact (before insert) {
+	Map<String, Contact> emailMap = new Map<String, Contact>();
+    Map<String, Contact> phoneMap = new Map<String, Contact>();
+    
+    
+    for(Contact c : Trigger.new){
+        if(c.Email != null){
+            emailMap.put(c.Email, c);
+        }
+        if(c.Phone != null){
+            phoneMap.put(c.Phone, c);
+        }
+    }
+    
+    List<Contact> conList = [Select Id, Email, Phone from Contact where email in: emailMap.keySet() or phone in: phoneMap.keySet()];
+    if(conList.size()>0){
+        for(Contact c : conList){
+            if(emailMap.containsKey(c.Email)){
+                c.Email.addError('Contact with this email address already exists!');
+            }else{
+                emailMap.put(c.Email,c);
+            }
+            if(phoneMap.containsKey(c.Phone)){
+                c.Phone.addError('Contact with this phone number already exists!');
+            }else{
+                phoneMap.put(c.Phone,c);
+            }
+        }
+    }
+}
+
 
 
 
