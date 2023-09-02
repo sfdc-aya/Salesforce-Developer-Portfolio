@@ -1,8 +1,8 @@
 # Salesforce-Developer-Portfolio
-Includes different business scenarios where Salesforce Apex is utilized to solve business problems through automation and manipulating data from the database.
+Includes different business scenarios where Salesforce Apex classes, triggers, asynchronous Apex are utilized to solve business problems through automation and manipulating data from the database.
 
 Introduction:
-Hello and welcome to my Salesforce Developer Portfolio! I'm Ayazhan Mukhammedova, a Salesforce professional with a diverse background in business analysis and Salesforce development. Over the past 5 years, I've had the privilege of working extensively     in both roles, allowing me to bridge the gap between business requirements and technical solutions within the Salesforce ecosystem.
+Hello and welcome to my Salesforce Developer Portfolio! I'm Ayazhan Mukhammedova, a Salesforce professional with a diverse background in business analysis and Salesforce development. Over the past 5 years, I've had the privilege of working extensively in both roles, allowing me to bridge the gap between business requirements and technical solutions within the Salesforce ecosystem.
 
 My Skills and Expertise:
 Business Analysis (2.5 Years):
