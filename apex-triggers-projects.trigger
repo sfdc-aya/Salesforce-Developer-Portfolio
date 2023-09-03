@@ -402,6 +402,64 @@ trigger CreateAssocContact on Account (after insert) {
 }
 
 
+17. Auto - Create an Account (Contact Obj)
+Use case: Create Account record whenever new contact is created without an account.
+
+trigger CreateContact on Contact (after insert) {
+    List<Account> accList = new List<Account>();
+    
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isInsert){
+        for(Contact c : Trigger.new){
+            if(c.accountId == null){
+                Account a = new Account();
+                a.Name = c.LastName;
+                a.Phone = c.Phone;
+                accList.add(a);
+            }
+        }
+    }
+    if(!accList.isEmpty()){
+        insert accList;
+    }
+}
+
+
+18. Create a field on Account called “Only_Default_Contact”, checkbox, default off (Account Obj)
+Use case: When a new Account is created, create a new Contact that has the following data points:
+First Name = “Info”
+Last Name = “Default”
+Email = “info@websitedomain.tld”
+Only_Default_Contact = TRUE
+
+trigger CheckIfDefault on Account (after insert) {
+    List<Contact> conList = new List<Contact>();
+    
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isInsert){
+        for(Account a : Trigger.new){
+			Contact c = new Contact();
+            c.LastName = 'Default';
+            c.FirstName = 'Info';
+            c.Email = 'info@websitedomain.tld';
+            c.accountId = a.id;
+            
+            conList.add(c);
+            
+            a.Only_Default_Contact__c = true;
+            update a;
+        }
+    }
+    if(conList.size()>0){
+        insert conList;
+    }
+}
+
+
+19.
+
+
+
+
+
 
 
 
