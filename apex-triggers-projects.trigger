@@ -141,6 +141,7 @@ trigger CreateAssociatedContacts on Account (after insert) {
     } 
 }
 
+
 7. Send Mass Emails When Lead's created (Lead Obj)
 Use case: After a lead is created in the org, auto send emails to the lead owners.
 
@@ -363,8 +364,42 @@ trigger UpdateCustomField on Account (before update) {
 }
 
 
-16.
+16. Auto-Create Contacts for Newly Inserted Acc (Account Obj)
+Use case: Create a field on Account Named (Client Contact lookup to Contact). Once an Account is inserted a Contact will be created with the name of the Account and that Contact will be the Client Contact on the Account.
 
+trigger CreateAssocContact on Account (after insert) {
+    List<Contact> conList = new List<Contact>();
+    Map<Id, Account> accMap = new Map<Id, Account>();
+    
+    if(Trigger.isAfter && Trigger.isInsert){
+        for(Account a : Trigger.new){
+            Contact c = new Contact();
+            c.AccountId = a.id;
+            c.LastName = a.Name +' contact';
+            conList.add(c);
+            accMap.put(a.Id, a);
+        }
+    }
+    
+    if(conList.size()>0){
+        insert conList;
+        
+            List<Account> accountsToUpdate = new List<Account>();
+            
+            for (Contact c : conList) {
+                Account relatedAccount = accMap.get(c.AccountId);
+                
+                if (relatedAccount != null) {
+                    relatedAccount.Client_Contact__c = c.Id;
+                    accountsToUpdate.add(relatedAccount);
+                }
+            }
+            
+            if (!accountsToUpdate.isEmpty()) {
+                update accountsToUpdate;
+            }
+    	}   
+}
 
 
 
