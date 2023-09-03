@@ -248,8 +248,9 @@ trigger MoveCases on Case (after insert) {
 }
 
 
-12. Auto Assign Cases
-//Assign Case to User Based on Priority
+12. Auto Assign Cases (Case Obj)
+Use case: Assign Case to User Based on Priority
+
 trigger AutoAssignCase on Case (before insert) {
     List<Case> assignCase = new List<Case>();
     
@@ -265,7 +266,40 @@ trigger AutoAssignCase on Case (before insert) {
 }
 
 
+13. Mark Associated Oppties Closed Lost (Account Obj)
+Use case: Write a trigger on the Account when the Account is updated check all 
+opportunities related to the account. Update all Opportunities Stage to close lost if an opportunity created date is greater than 30 days from today and stage not equal to close won.
 
+trigger MarkClosedLost on Account (after update) {
+	Set<ID> acIds = new Set<ID>();
+    List<Opportunity> optieList = new List<Opportunity>();
+    
+    Date thirtydaysago = Date.today().addDays(-30);
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isUpdate){
+        for(Account a : Trigger.new){
+            acIds.add(a.id);
+        }
+    }
+    
+    if(!acIds.isEmpty()){
+        List<Opportunity> relatedOppties = [Select Id, AccountId, StageName,CloseDate from Opportunity where AccountId in : acIds and stageName != 'Closed Won'];
+        
+          for(Opportunity o : relatedOppties){
+        	if(o.StageName != 'Closed Lost' && o.CloseDate > thirtydaysago){
+            o.StageName = 'Closed Lost';
+            o.CloseDate = date.today();
+            optieList.add(o);
+        }
+    }
+}
+    
+    if(optieList.size()>0){
+        update optieList;
+    }
+}
+
+
+14.
 
 
 
