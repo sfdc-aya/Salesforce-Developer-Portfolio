@@ -454,7 +454,7 @@ trigger CheckIfDefault on Account (after insert) {
 }
 
 
-19. Create a field on Account called “ Contact_Created__c ”, checkbox, default off
+19. Create a field on Account called “ Contact_Created__c ”, checkbox, default off (Contact Obj)
 Use case: Create an apex trigger on the contact object and every time a new contact is created and an account is selected in the creation of that contact object then on that account object a checkbox filed ( Contact_Created__c ) will be checked true, which represent that this account has a contact.
 
 trigger CheckContactCreated on Contact (after insert) {
@@ -478,6 +478,43 @@ trigger CheckContactCreated on Contact (after insert) {
         update acList;
     }
 }
+
+
+20. Create a field on Account called “Out_of_Zip”, checkbox, default off (Account Obj)
+Use case: When a Billing Address is modified, get the new Postal Code. Then check which Contacts on the Account are outside that Postal Code. If 1 or more Contacts are outside of the Postal Code, mark Out_of_Zip as TRUE.
+
+trigger OutOfZip on Account (before insert, before update) {
+    Set<ID> acIds = new Set<ID>();
+    
+    if(Trigger.isExecuting && Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)){
+        for(Integer i=0; i< Trigger.new.size(); i++){
+            Account newAcc = Trigger.new[i];
+            Account oldAcc = Trigger.old[i];
+            
+		if(newAcc.BillingCity != oldAcc.BillingCity || newAcc.BillingStreet != oldAcc.BillingStreet || newAcc.BillingPostalCode != oldAcc.BillingPostalCode ||
+          newAcc.BillingState != oldAcc.BillingState || newAcc.BillingCountry != oldAcc.BillingCountry){
+               acIds.add(newAcc.id);
+	
+           Map<ID, Integer> acsOutOfZip = new Map<ID, Integer>();
+           List<Contact> conList = [Select Id, Account.BillingPostalCode from Contact where Id in : acIds];  
+              for(Contact c : conList){
+                  if(c.MailingPostalCode != c.Account.BillingostalCode){
+                      if(acsOutOfZip.get(c.id) == null){
+                          acsOutOfZip.put(c.id, 1);
+                      }else{
+                          acsOutOfZip.put(c.id, acsOutOfZip.get(c.id)+1);
+                      }
+                  }
+              }
+              for(Account a :Trigger.new){
+                  if(acsOutOfZip.get(a.id) != null && acsOutOfZip.get(a.id) >1){
+                      a.Out_of_Zip = true;
+                  }else{
+                      a.Out_of_Zip = false;
+                  }
+              }
+        }
+    }
 
 
 
