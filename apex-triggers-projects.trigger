@@ -299,8 +299,71 @@ trigger MarkClosedLost on Account (after update) {
 }
 
 
-14.
+14. Notify System Administrator
+Use case: Once an Account is inserted an email should go to the System Admin user with specified text below.
 
+trigger NotifySystemAdmin on Account (after insert) {
+    List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+    User u = [Select Id, Profile.Name, Email from User where Profile.Name = 'System Administrator' and email != null];
+    
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isInsert){
+        for(Account a : Trigger.new){
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.toaddresses = new String[] {u.Email};
+                mail.setSenderDisplayName('System Administrator');
+                mail.setSubject('New Account has been created');
+                
+                String body = 'Dear, System Administrator' + u.Name;
+                body+= 'New Account has been created in the system '+a.Name;
+                mail.setHtmlBody(body);
+                
+                mail.setSaveAsActivity(false);
+                mail.setBccSender(false);
+                emails.add(mail);
+        }
+    }
+    if(emails.size()>0){
+        Messaging.SendEmailResult[] result = Messaging.sendEmail(emails);
+        for(Messaging.SendEmailResult sr : result){
+            if(!sr.isSuccess()){
+                System.debug('Error occured while sending emails' + sr.getErrors());
+            }
+        }
+    }
+}
+
+
+15. Update Custom field with Opptie Amount (Account Obj)
+Use case: Once an Account will update then that Account will update with the total amount from All its Opportunities on the Account Level. The account field name would be ” Total Opportunity Amount “.
+
+trigger UpdateCustomField on Account (before update) {
+    Set<ID> acIds = new Set<ID>();
+    Map<Id, Double> amountMap = new Map<Id, Double>();
+    
+    if(Trigger.isInsert || Trigger.isUpdate){
+        for(Account a : Trigger.new){
+            a.Total_Amount__c  = 0;
+            acIds.add(a.id);
+        }
+    }
+   
+    List<AggregateResult> results = [Select AccountId, sum(Amount)total from Opportunity where AccountId in : acIds group by AccountId];
+    if(results.size()>0){
+         for(AggregateResult a : results){
+        	Id accId = (ID)a.get('AccountId');
+            Double amount = (Double)a.get('Total');
+            amountMap.put(accId, amount);
+    	}
+    }
+    for(Account a :Trigger.new){
+         if(amountMap.containsKey(a.id)){
+        	a.Total_Amount__c  = amountMap.get(a.id);
+    	}  
+    }
+}
+
+
+16.
 
 
 
