@@ -454,7 +454,34 @@ trigger CheckIfDefault on Account (after insert) {
 }
 
 
-19.
+19. Create a field on Account called “ Contact_Created__c ”, checkbox, default off
+Use case: Create an apex trigger on the contact object and every time a new contact is created and an account is selected in the creation of that contact object then on that account object a checkbox filed ( Contact_Created__c ) will be checked true, which represent that this account has a contact.
+
+trigger CheckContactCreated on Contact (after insert) {
+	Set<ID> acIds = new Set<ID>();
+    
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isInsert){
+        for(Contact c : Trigger.new){
+            acIds.add(c.accountId);
+        }
+    }
+    
+    List<Account> acList = [Select Id, Name,Contact_Created__c from Account where Id in : acIds];
+    for(Contact c : Trigger.new){
+        for(Account a : acList){
+            if(a.id == c.AccountId){
+                a.Contact_Created__c = true;
+            }
+        }
+    }
+    if(acList.size()>0){
+        update acList;
+    }
+}
+
+
+
+
 
 
 
