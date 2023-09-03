@@ -111,6 +111,25 @@ String cronExp = '0 0 0 * * ?';
 System.schedule('ScheduledDataUpdate Job', cronExp, new ScheduleDataUpdate());
 
 
-4.
+4.Mass Update Description of an sObject (Opportunity Obj)
+Use case: Mass Update opptie description when the Stage criteria are met.
+
+public class OpptyHandler {
+	
+    @future
+    public static void markTaskAsCompleted(List<String> statusList ){
+        List<Opportunity> opList = [Select Id, StageName, Description from Opportunity where StageName in : statusList];
+        for(Opportunity o : opList){
+            if(o.StageName == 'Closed Lost'){
+                o.Description = 'this oppty was Closed Lost';
+                update o;
+        	}
+        }
+    }
+}
+
+//to invoke the above class through Anonymous Window:
+List<String> statusList  = new List<String>{'Closed Lost'};
+OpptyHandler.markTaskAsCompleted(statusList);
 
 
