@@ -137,8 +137,8 @@ public String evenOrOdd(Integer num) {
 }
 
 
-11.Rock Paper Scissors
-Use case: Rock beats scissors, scissors beats paper, paper beats rock. 
+11. Rock Paper Scissors
+Use case: Rock beats scissors, scissors beat paper, paper beats rock. 
 	Implement the method rockPaperScissors that takes as parameters two strings player1 and player2 representing the moves played by player 1 and player 2, 
 	valid moves being 'rock', 'paper', and 'scissors'. Return 1 if player 1 wins, 2 if player 2 wins, and 0 if no one wins.
 
@@ -154,6 +154,11 @@ public Integer rockPaperScissors(String player1, String player2) {
     }
 }
 
+
+
+
+
+14.
 
 
 
