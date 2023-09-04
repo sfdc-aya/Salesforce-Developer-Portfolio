@@ -155,10 +155,9 @@ public Integer rockPaperScissors(String player1, String player2) {
 }
 
 
+14. Given a person's age, return their age group as a string: 'Infant' for ages 0-1, 'Child' for ages 2 - 14, 'Youth' for ages 15 - 21, and 'Adult' for ages 22+.
 
 
-
-14.
 
 
 
