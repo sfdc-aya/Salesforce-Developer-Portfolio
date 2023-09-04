@@ -1,4 +1,4 @@
-1. Bulk Data Cleanup (Opportunity obj)
+1. Bulk Data Cleanup (Opportunity obj, Future Method)
 Use case: delete all Closed Won Oppties from the system using async apex
 
 public class BatchDataCleanup implements Database.Batchable <sObject> {
@@ -27,7 +27,7 @@ BatchDataCleanup bc = new BatchDataCleanup();
 Database.executeBatch(bc);
 
 
-2. Send Mass Email Notifications to users when Opptie is closed.
+2. Send Mass Email Notifications to users when Opptie is closed. (Opportunity obj, Queueable Method)
 Use case: Develop a program that sends mass emails to opptie owners when opptie stage is closed won.
 
 public class BulkEmailAlert implements Queueable{
@@ -82,7 +82,7 @@ BulkEmailAlert be = new BulkEmailAlert();
 System.enqueueJob(be);
 
 
-3.Schedule a Data Update (Account Obj)
+3.Schedule a Data Update (Account Obj, Schedulable Method)
 Use case: Update account description when the Industry is Apparel.
 
 global class ScheduleDataUpdate implements Schedulable{
@@ -111,7 +111,7 @@ String cronExp = '0 0 0 * * ?';
 System.schedule('ScheduledDataUpdate Job', cronExp, new ScheduleDataUpdate());
 
 
-4.Mass Update Description of an sObject (Opportunity Obj)
+4.Mass Update Description of an sObject (Opportunity Obj, Future Method)
 Use case: Mass Update opptie description when the Stage criteria are met.
 
 public class OpptyHandler {
@@ -133,4 +133,44 @@ List<String> statusList  = new List<String>{'Closed Lost'};
 OpptyHandler.markTaskAsCompleted(statusList);
 
 
-5.
+5. Assign Permission Sets to Sales Users (User Obj, Future Method)
+
+//Apex Trigger
+trigger AssignUserPerm on User (after insert) {
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isInsert){
+        Set<ID> userIds = new Set<ID>();
+        
+        Profile salesProfile = [Select Id, Profile from Profile where Name = 'Custom: Sales Profile' limit 1];
+        
+        for(User u : Trigger.new){
+            if(u.ProfileId == salesProfile.id){
+                userIds.add(u.id);
+            }
+        }
+        if(userIds != null){
+            AssignPermission.assignPerm(userIds);
+        }
+    }
+}
+
+//Apex class
+public class AssignPermission {
+    @future
+    public static void AssignPerm(Set<ID> newUsersId){
+        PermissionSet salesPermSet = [Select Id from PermissionSet where Name = 'Sales_User_Permissions'];
+        
+        List<PermissionSetAssignment> permAssign = new List<PermissionSetAssignment>();
+        if(salesPermSet != null){
+            for(Id userId : newUsersId){
+                permAssign.add(new PermissionSetAssignment(PeremissionSetId = salesPermSet.id, AssigneeId = userId));
+            }
+        }
+        if(permAssign != null){
+            insert permAssign;
+        }
+    }
+}
+
+
+6.
+
