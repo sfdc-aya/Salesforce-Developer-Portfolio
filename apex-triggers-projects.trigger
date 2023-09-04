@@ -93,7 +93,7 @@ trigger AutoPopulateContactEmail on Contact (before insert) {
 User case: if dup contact is being inserted throw an error to prevent it.
 
 trigger PreventDups on Contact (before insert) {
-	Map<String, Contact> emailMap = new Map<String, Contact>();
+    Map<String, Contact> emailMap = new Map<String, Contact>();
     Map<String, Contact> phoneMap = new Map<String, Contact>();
     
     
