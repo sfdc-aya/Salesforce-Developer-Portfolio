@@ -687,7 +687,7 @@ Use case: Write a trigger on Account when an account is updated When the account
 	  Account Name: XYZ.
 
 trigger SendMassEmail on Account (after update) {
-	Set<ID> acIds = new Set<ID>();
+    Set<ID> acIds = new Set<ID>();
     List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
     
     if(Trigger.isExecuting && Trigger.isAfter && Trigger.isUpdate){
