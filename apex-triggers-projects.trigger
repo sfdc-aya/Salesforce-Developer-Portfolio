@@ -614,13 +614,52 @@ public class DeadIntel {
 }
 
 
-24.
-    
+24. Only Sys Admin can Delete Tasks (Task Obj)
+Use Case: Write a trigger, only the system admin user should be able to delete the task.
+
+trigger PreventDel on Task (before delete) {
+	User u = [Select Id, Profile.Name from User where Profile.Name = 'System Administrator' limit 1];
+    for(Task t : Trigger.old){
+        if(t.ownerId != u.Id){
+            t.addError('Only System Administrator can delete tasks!');
+        }
+    }
+}
 
 
+25. Recursive Loop Prevention
+Use case: Create a duplicate lead when a lead is inserted.
+trigger CreateDupLeads on Lead (after insert) {
+    List<Lead> leadList = new List<Lead>();
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isInsert){
+        if(CheckLeads.dupLead()){
+            Lead l = new Lead();
+            l.FirstName = 'dup';
+            l.LastName = 'dupl';
+            l.Company = 'Dup inc.';
+            leadList.add(l);
+        }   
+    }
+    if(leadList.size()>0){
+        insert leadList;
+    }
+}
+
+//Apex Class to set the boolean to true, to ensure it runs once and we won't hit the infinite loop
+public class CheckLeads {
+    private static Boolean r = true;
+    public static Boolean dupLead(){
+        if(r){
+            r = false;
+            return true;
+        }else{
+            return r;
+        }
+    }
+}
 
 
-
+26.
 
 
 
