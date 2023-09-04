@@ -134,6 +134,9 @@ OpptyHandler.markTaskAsCompleted(statusList);
 
 
 5. Assign Permission Sets to Sales Users (User Obj, Future Method)
+Use case: Pre-requisite: Create a permission set with API name Sales_User_Permissions.
+	  Whenever a new user is created with profile Custom: Sales Profile, assign the permission set Sales_User_Permissions to User.
+	  Consider this not urgent and permission set can be assigned when the resource is available in salesforce org. Use @future annotation for the method which contains the logic.
 
 //Apex Trigger
 trigger AssignUserPerm on User (after insert) {
@@ -168,6 +171,51 @@ public class AssignPermission {
         if(permAssign != null){
             insert permAssign;
         }
+    }
+}
+
+//Test Class
+Scenario 1- Create a new user with profile “Custom: Sales Profile”. Verify that after insertion of the user, a permission set assignment record should be created with ‘Sales_User_Permissions’ permission set and inserted User as the assignee.
+
+@isTest
+public class TestUserUtil {
+    
+    @isTest
+    public class createUser(String fName, String lName, String Alias, Profile profile){
+        User us = new User(firstName = fName, lastName = lName, Alias = alias,email = fName+'.'+lName+'@apexbabysteps.com', profileId = profile);
+        return us;
+        }
+    }
+
+	@isTest
+    private class UsrTrigger{
+      @isTest
+        static void testProfile(){
+            Profile profile = [Select Id from Profile where name = 'Custom: Sales Profile' limit 1];
+            User usr = TestUserUtil.createUser('Test','User222', 'tusr', profile);
+            
+            Test.startTest();
+            	insert usr;
+            Test.stopTest();
+            
+            PermissionSet ps = [Select Id from PermissionSet where Name = 'Sales_User_Permissions' limit 1];
+            List<PermissionSetAssignment> psa = [Select Id from PermissionSetAssignment where permissionsetid = :ps.id and assigneeId = :usr.Id];
+            System.assertEquals(1, ps.size(), 'Permission set records are not as expected');
+        }
+    }
+
+	@isTest
+    public static void test_diff_user(){
+        Profile profile = [Select Id from Profile where Name = 'Standard User' Limit 1];
+        User usr = TestUserUtil.createUser('Test2', 'User333', 'tus', profile);
+        
+        Test.startTest();
+        	insert usr;
+        Test.stopTest();
+        
+        PermissionSet ps = [Select Id from PermissionSet where Name = 'Sales_User_Permissions' limit 1];
+        List<PermissionSetAssignment> psa = [Select Id from PermissionSetAssignment where permissionSetId =: ps.Id and assigneeId =: usr.Id];
+        System.assertEquals(0, ps.size(), 'Permission set records are not as expected');
     }
 }
 
