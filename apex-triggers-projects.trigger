@@ -627,7 +627,7 @@ trigger PreventDel on Task (before delete) {
 }
 
 
-25. Recursive Loop Prevention
+25. Recursive Loop Prevention (Lead Obj)
 Use case: Create a duplicate lead when a lead is inserted.
 trigger CreateDupLeads on Lead (after insert) {
     List<Lead> leadList = new List<Lead>();
@@ -659,10 +659,72 @@ public class CheckLeads {
 }
 
 
-26.
+26. Auto-create Product Line Items (Opportunity Obj)
+Use case: Write a trigger on Opportunity, when an Opportunity will insert an Opportunity Line Item should be insert by default with any of the Products associated with Opportunity.
+
+trigger AutoCreateProductLines on Opportunity (after insert) {
+    List<OpportunityLineItem> oliList = new List<OpportunityLineItem>();
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isInsert){
+        for(Opportunity o : Trigger.new){
+            OpportunityLineItem oli = new OpportunityLineItem();
+            oli.opportunityId = o.id;
+            oli.Product2Id = '01t8b00000GMJUeAAP';
+            oli.PricebookEntryId = '01u8b00000iA3PfAAK';
+            oli.Quantity = 23;
+            oliList.add(oli);
+        }
+    }
+    if(!oliList.isEmpty()){
+        insert oliList;
+    }
+}
 
 
+27. Send Mass Email When Acc Type Changes (Account Obj)
+Use case: Write a trigger on Account when an account is updated When the account type changes send an email to all its contacts that your account information has been changed.
+	  Subject: Account Update Info
+	  Body: Your account information has been updated successfully.
+	  Account Name: XYZ.
 
+trigger SendMassEmail on Account (after update) {
+	Set<ID> acIds = new Set<ID>();
+    List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+    
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isUpdate){
+        for(Account a : trigger.new){
+            if(a.Type != Trigger.oldMap.get(a.id).Type && a.Type == 'Prospect'){
+                acIds.add(a.id);
+            }
+        }
+    }
+    List<Contact> conList = [Select Id, AccountId, FirstName, LastName, Email from Contact where AccountId in :acIds and Email != null];
+    
+    if(conList.size()>0){
+        for(Contact c : conList){
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                mail.toaddresses = new String[] {c.Email};
+                mail.setSenderDisplayName('Salesforce System Administrator');
+                mail.setSubject('You Have a Prospect Account that needs to be contacted and become a customer');
+                
+                String body = 'Dear, Account Owner '+c.LastName;
+                body+= 'your account type has been marked as Prospect, and needs to be contacted to become a customer'; 
+                mail.setHtmlBody(body);
+                
+                mail.setBccSender(false);
+                mail.setSaveAsActivity(false);
+                
+                emails.add(mail);
+        }
+    }
+    if(!emails.isEmpty()){
+        Messaging.SendEmailResult[] result = Messaging.sendEmail(emails);
+        for(Messaging.SendEmailResult sr : result){
+            if(!sr.isSuccess()){
+                System.debug('Error occured while sending mass emails '+sr.getErrors());
+            }
+        }
+    }
+}
 
 
 
