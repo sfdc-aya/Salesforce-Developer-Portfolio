@@ -491,9 +491,9 @@ trigger OutOfZip on Account (before insert, before update) {
             Account newAcc = Trigger.new[i];
             Account oldAcc = Trigger.old[i];
             
-		if(newAcc.BillingCity != oldAcc.BillingCity || newAcc.BillingStreet != oldAcc.BillingStreet || newAcc.BillingPostalCode != oldAcc.BillingPostalCode ||
+	if(newAcc.BillingCity != oldAcc.BillingCity || newAcc.BillingStreet != oldAcc.BillingStreet || newAcc.BillingPostalCode != oldAcc.BillingPostalCode ||
           newAcc.BillingState != oldAcc.BillingState || newAcc.BillingCountry != oldAcc.BillingCountry){
-               acIds.add(newAcc.id);
+          acIds.add(newAcc.id);
 	
            Map<ID, Integer> acsOutOfZip = new Map<ID, Integer>();
            List<Contact> conList = [Select Id, Account.BillingPostalCode from Contact where Id in : acIds];  
@@ -517,7 +517,48 @@ trigger OutOfZip on Account (before insert, before update) {
     }
 
 
+21. Create a field on Contact called Profile, text, 255
+Use case: When an Account is updated and the Website is filled in, update all the Profile field on all Contacts to:
+	Profile = Website + ‘/’ + First Letter of First Name + Last Name
 
+trigger UpdateProfile on Account (after update) {
+    Set<ID> acIds = new Set<ID>();
+    List<Contact> conList = new List<Contact>();
+    
+    If(Trigger.isExecuting && Trigger.isAfter && Trigger.isUpdate){
+        for(Account a :Trigger.new){
+            if(a.Website != null){
+                acIds.add(a.id);
+            }
+        }
+    }
+    
+    if(acIds.size()>0){
+        List<Contact> conList = [Select Id,AccountId, FirstName,LastName,Account.Website, Profile__c from Contact where AccountId in : acIds];
+        for(Contact c : conList){
+            if(c.FirstName != null){
+                c.Profile__c = c.Account.Website +'/'+c.FirstName.substring(0,1)+c.LastName;
+            }
+        }
+        update conList;
+    }
+}
+
+
+22. Create a field on Account called “is_gold”, checkbox, default off
+Use case: When an Opportunity is greater than $20k, mark is_gold to TRUE
+
+trigger GoldOppties on Account (after update) {
+    For(Account a:trigger.new){
+        List<opportunity> oppList=[select id, Amount, AccountId from opportunity where AccountId =:a.id And Amount > 20000];
+        If(oppList.size()>0){
+            a.Is_Gold__c=True;
+        }Else{
+            a.Is_Gold__c=False;
+        }
+        update a;
+    	}
+}
 
 
 
