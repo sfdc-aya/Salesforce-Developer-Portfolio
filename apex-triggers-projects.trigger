@@ -517,8 +517,8 @@ trigger OutOfZip on Account (before insert, before update) {
     }
 
 
-21. Create a field on Contact called Profile, text, 255
-Use case: When an Account is updated and the Website is filled in, update all the Profile field on all Contacts to:
+21. Update Profile Field (Account Obj)
+Use case: Create a field on Contact called Profile, text, 255. When an Account is updated and the Website is filled in, update all the Profile field on all Contacts to:
 	Profile = Website + ‘/’ + First Letter of First Name + Last Name
 
 trigger UpdateProfile on Account (after update) {
@@ -545,8 +545,8 @@ trigger UpdateProfile on Account (after update) {
 }
 
 
-22. Create a field on Account called “is_gold”, checkbox, default off
-Use case: When an Opportunity is greater than $20k, mark is_gold to TRUE
+22. Mark Gold Opportunities (Account Obj)
+Use case: Create a field on Account called “is_gold”, checkbox, default off. When an Opportunity is greater than $20k, mark is_gold to TRUE
 
 trigger GoldOppties on Account (after update) {
     For(Account a:trigger.new){
@@ -559,6 +559,67 @@ trigger GoldOppties on Account (after update) {
         update a;
     	}
 }
+
+
+23. Mark Need Intel on Acc (Contact Obj)
+Use case: Create a field on Account called “need_intel”, checkbox, default off. Create a field on Contact called “Dead”, checkbox, default off. If 70% or more of the Contacts on an Account are Dead, mark the need_intel field to TRUE
+
+//Trigger
+trigger UpdateContact on Contact (after update) {
+if(Trigger.isUpdate && Trigger.isAfter){
+        AccountContact.DeadIntel(Trigger.new);
+    }
+}
+
+public class DeadIntel {
+    public static void updateAccountNeedIntel(List<Contact> conList) {
+        Set<Id> accIds = new Set<Id>();
+        
+        for (Contact c : conList) {
+            if (c.AccountId != null) {
+                accIds.add(c.AccountId);
+            }
+        }
+        
+        Map<Id, List<Contact>> conMap = new Map<Id, List<Contact>>();
+        
+        for (Contact c : [SELECT Id, AccountId, Dead__c FROM Contact WHERE AccountId IN :accIds]) {
+            if (!conMap.containsKey(c.AccountId)) {
+                conMap.put(c.AccountId, new List<Contact>());
+            }
+            conMap.get(c.AccountId).add(c);
+        }
+        
+        List<Account> acListToUpdate = new List<Account>();
+        
+        for (Id acId : conMap.keySet()) {
+            Integer countOfDead = 0;
+            Integer totalContacts = conMap.get(acId).size();
+            
+            for (Contact con : conMap.get(acId)) {
+                if (con.Dead__c == true) {
+                    countOfDead++;
+                }
+            }
+            
+            if (totalContacts > 0 && (countOfDead * 100 / totalContacts) > 70) {
+                acListToUpdate.add(new Account(Id = acId, Need_Intel__c = true));
+            }
+        }
+        
+        if (!acListToUpdate.isEmpty()) {
+            update acListToUpdate;
+        }
+    }
+}
+
+
+24.
+    
+
+
+
+
 
 
 
