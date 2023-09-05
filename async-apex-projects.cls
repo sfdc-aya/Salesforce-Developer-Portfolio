@@ -82,7 +82,7 @@ BulkEmailAlert be = new BulkEmailAlert();
 System.enqueueJob(be);
 
 
-3.Schedule a Data Update (Account Obj, Schedulable Method)
+3. Schedule a Data Update (Account Obj, Schedulable Method)
 Use case: Update account description when the Industry is Apparel.
 
 global class ScheduleDataUpdate implements Schedulable{
@@ -111,8 +111,8 @@ String cronExp = '0 0 0 * * ?';
 System.schedule('ScheduledDataUpdate Job', cronExp, new ScheduleDataUpdate());
 
 
-4.Mass Update Description of an sObject (Opportunity Obj, Future Method)
-Use case: Mass Update opptie description when the Stage criteria are met.
+4. Mass Update Description of an object (Opportunity Obj, Future Method)
+Use case: Mass Update option description when the Stage criteria are met.
 
 public class OpptyHandler {
 	
@@ -134,9 +134,9 @@ OpptyHandler.markTaskAsCompleted(statusList);
 
 
 5. Assign Permission Sets to Sales Users (User Obj, Future Method)
-Use case: Pre-requisite: Create a permission set with API name Sales_User_Permissions.
-	  Whenever a new user is created with profile Custom: Sales Profile, assign the permission set Sales_User_Permissions to User.
-	  Consider this not urgent and permission set can be assigned when the resource is available in salesforce org. Use @future annotation for the method which contains the logic.
+Use case: Pre-requisite: Create a permission set with the API name Sales_User_Permissions.
+	  Whenever a new user is created with the profile Custom: Sales Profile, assign the permission set Sales_User_Permissions to the User.
+	  Consider this not urgent and permission set can be assigned when the resource is available in salesforce org. Use @future annotation for the method that contains the logic.
 
 //Apex Trigger
 trigger AssignUserPerm on User (after insert) {
@@ -220,5 +220,57 @@ public class TestUserUtil {
 }
 
 
-6.
+6. Update Contacts (Contact Obj, Batch Method)
+Use case: Description of Contact should be updated with “Title of AccountName: Account’s Description“. Contact which does not have any Account associated with it, should not be updated.
+
+public class UpdateContact implements Database.Batchable <sObject> {
+    public Database.QueryLocator start(Database.BatchableContext bc){
+        return Database.getQueryLocator('Select AccountId, Title, Account.Name, Account.Description, Id from Contact where AccountId != null');
+    }
+    public void execute(Database.BatchableContext bc, List<Account> scope){
+        if(scope != null){
+            for(Contact c : scope){
+            	c.Description = c.title +' of '+c.Account.Name+':'+c.Account.Description;
+        	}
+            update c;
+        }      
+    }
+    public void finish(Database.BatchableContext bc){
+        System.debug('The job is finished');
+    }
+}
+//to invoke
+UpdateContactDescription bc = new UpdateContactDescription()
+Database.executeBatch(bc);
+
+
+7. Assign Tasks Asynchronously (Opportunity Obj, Batch Method)
+Use case: Create a Task to review opportunities for all the opportunities irrespective of their StageName. Tasks should be assigned to the related Opportunity Owner and if 
+	  any of the Owner/User is inactive then assign the task to any user with a profile System Administrator.
+
+public class AssignTasks implements Database.Batchable<sObject>{
+    public Database.QueryLocator start(Database.BatchableContext bc){
+        return Database.getQueryLocator('Select Id,OwnerId, Owner.isActive from Opportunity');
+    }
+    public void execute(Database.BatchableContext bc, List<Opportunity> scope){
+        List<Task> tasks = new List<Task>();
+        User usr = [Select Id from User where Profile.Name = 'System Administrator' limit 1];
+        
+        for(Opportunity o : scope){
+            String owner;
+            if(o.Owner.isActive){
+                tasks.add(new Task(whatid = o.id, whoId = o.ownerId, subject = 'Please review the related oppties'));
+            }else{
+                tasks.add(new Task(whatId = o.id, whoid = usr.id, subject = 'Please review related oppties'));
+            }
+        }   
+        insert tasks;
+    }
+    public void finish(Database.BatchableContext bc){
+        System.debug('Job is completed!');
+    }
+}
+
+
+8.
 
