@@ -321,6 +321,25 @@ public Integer fibonacci(Integer n) {
 Use case: Implement a function reverseWordsInASentence that will take a String containing words separated by spaces as an argument, and return a string with the order of the words reversed.
           Example : If the sentence is The quick brown fox jumps over the lazy dog, then reverseWordsInASentence(String sentence) should evaluate to dog lazy the over jumps fox brown quick The
 
+public String reverseWordsInASentence(String sentence){
+    if(sentence == null){
+        return null;
+    }else if(sentence == ''){
+        return '';
+    }
+    
+    List<String> word = sentence?.split(' ');
+    String reversed = '';
+
+    for(Integer i=word.size()-1; i>= 0; i--){
+        if(reversed == ''){
+            reversed += word[i];
+        }else{
+            reversed += ' '+word[i];
+        }
+    }
+    return reversed;
+}
 
 
 25. Next Prime
@@ -329,6 +348,23 @@ Use case: A prime number is a number greater than 1 that is not evenly divisible
 	  nextPrime(10) = 11. 11 is the smallest prime number greater than 10
 	  nextPrime(8) = 11. 11 is the smallest prime number greater than 8
 
+  if (num < 2) {
+        return 2;
+    }
 
+    Integer candidate = num + 1;
+    while (!isPrime(candidate)) {
+        candidate += 1;
+    }
+    return candidate;
+}
+
+public Boolean isPrime(Integer candidate) {
+    for (Integer i = 2; i < candidate; i++) {
+        if (Math.mod(candidate, i) == 0) {
+            return false;
+        }
+    }
+    return true;
 
 
