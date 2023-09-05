@@ -348,7 +348,7 @@ Use case: A prime number is a number greater than 1 that is not evenly divisible
 	  nextPrime(10) = 11. 11 is the smallest prime number greater than 10
 	  nextPrime(8) = 11. 11 is the smallest prime number greater than 8
 
-  if (num < 2) {
+if (num < 2) {
         return 2;
     }
 
