@@ -308,5 +308,43 @@ public class TestAssignTasks {
 }
 
 
-8.
+8. Batch Update Owners (Account Obj, Batch Method)
+Use case: (Database.Stateful and Outbound functionality Use)
+	   Create a batch class which would:
+	   Update all the account records owner to some new owner. (Example, Previous owner – abc@riteshgupta2492.com, New owner – xyz@riteshgupta2492.com)
+	   AND send an email to new owner mentioning total number of account records updated.
+
+public class BatchOwnerUpdate implement Database.Batchable <sObject>, Database.Stateful {
+    public Integer numberOfAcc = 0;
+    private String oldUserId;
+    private String newUserId;
+    
+    public BatchOwnerUpdate(String oldUserId, String newUserId){
+        this.oldUserId = oldUserId;
+        this.newUserId = newUserId;
+    }
+    
+    public Database.QueryLocator start(Database.BatchableContext bc){
+        return Database.getQueryLocator('Select Id, Name from Account where ownerId = \''+oldUserId '\'');
+    }
+    public void execute(Database.BatchableContext bc, List<Account> scope){
+        for(Account a : scope){
+            a.OwnerId = newUserId;
+            numberOfAcc++;
+        }
+        update scope;
+    }
+    public void finish(Database.BatchableContext bc){
+        System.debug('The job is done');
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        mail.toaddresses = new String[] {newUserId};
+        mail.setSubject('Accounts have been updated');
+        mail.setPlainTextBody('Below are the accounts that have been updated '+ numberOfAcc);
+        
+        Messaging.SendEmailResult[] result = Messaging.sendEmail(new List<Messaging.SingleEmailMessage> {mail});
+    }
+}
+
+
+9. 
 
