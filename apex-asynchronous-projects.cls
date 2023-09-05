@@ -187,7 +187,7 @@ public class TestUserUtil {
         }
     }
 
-	@isTest
+    @isTest
     private class UsrTrigger{
       @isTest
         static void testProfile(){
@@ -204,7 +204,7 @@ public class TestUserUtil {
         }
     }
 
-	@isTest
+    @isTest
     public static void test_diff_user(){
         Profile profile = [Select Id from Profile where Name = 'Standard User' Limit 1];
         User usr = TestUserUtil.createUser('Test2', 'User333', 'tus', profile);
@@ -269,6 +269,42 @@ public class AssignTasks implements Database.Batchable<sObject>{
     public void finish(Database.BatchableContext bc){
         System.debug('Job is completed!');
     }
+}
+
+//Test Class
+Scenario 1- Create a new user with the profile “Custom: Sales Profile”. Verify that after the insertion of the user, a permission set assignment record should be created with the ‘Sales_User_Permissions’ permission set and inserted User as the assignee.
+
+@isTest
+public class TestAssignTasks {
+	
+    @isTest
+    static void setUpOppty(){
+        Opportunity op1 = new Opportunity(name = 'Admin Opp', StageName = 'Prospecting', closeDate = System.today());
+        insert op1;
+        
+        Profile pr = [Select Id from Profile where name = 'Standard User'];
+        User usr = new User(LastName = 'User122', FirstName = 'Test', alias = 'tusr', email = 'testuser@gmail.com', profileId = pr.Id);
+        System.runAs(usr){
+            Opportunity op2 = new Opportunity(name = 'Standard Opp', Stagename = 'Prospecting', closeDate = System.today());
+        insert op2;
+        }
+    }
+    
+    @isTest
+    static void testMethod(){
+        Opportunity adminOpp = [Select Id, OwnerId, Owner.Name from Opportunity where name = 'Admin Opp'];
+        Opportunity stanOpp = [Select Id, OwnerId, Owner.Name from Opportunity where name = 'Standard Opp'];
+        
+        Test.startTest();
+        	AssignTasks at = new AssignTasks();
+        	Database.executeBatch(at,10);
+        Test.stopTest();
+        
+        List<Task> tasks = [Select Id, OwnerId, WhatId from Task];
+        System.assertEquals(2, tasks.size(), '2 tasks should be created');
+        System.assertEquals(1, [Select Id, Name from Task where whoId =: adminOpp.OwnerId].size(),'Task is not created for related oppties');
+        System.assertEquals(1, [Select Id, Name from Task where whoId =: stanOpp.OwnerId].size(),'Task is not created for related oppties');
+    }   
 }
 
 
