@@ -345,6 +345,57 @@ public class BatchOwnerUpdate implement Database.Batchable <sObject>, Database.S
     }
 }
 
+//Test Class
+@isTest
+public class TestBatchOwnerUpdate {
 
-9. 
+    @isTest
+    public static  UserUtil(String fName, String lName, String Alias, Profile profile){
+        User usr = new User(firstName = fName,
+                            lastName = lName,
+                            alias = alias,
+                            profileId = profile.id);
+        return usr;
+    	}
+    
+    @isTest
+    static void createAcc(){
+        Account adminAcc = new Account(Name = 'AdminAccount');
+        insert adminAcc;
+        
+        Profile pr = [Select Id from Profile where Name = 'Standard User' limit 1];
+        User u = TestBatchOwnerUpdate.UserUtil('Standard', 'U', 'ustu', pr);
+        
+        System.runAs(u){
+	        Account stanAcc = new Account(Name = 'StandardAccount');
+		    insert stanAcc;
+        }
+        
+        String oldUserId = UserInfo.getUserId();
+        
+        List<Account> beforeBatchex - [Select Id, Name, OwnerId from Account];
+        System.assertEquals(2, accountsBeforeBatchExecution.size(), 'Accounts were not inserted.');
+        
+        for(Account acc: accountsBeforeBatchExecution) {
+            if(acc.Name == 'AdminAccount') {
+                System.assertEquals(oldUserId, acc.OwnerId, 'Owner ids do not match');
+            }
+            if(acc.Name == 'StandardAccount') {
+                System.assertEquals(newUser.Id, acc.OwnerId, 'Owner ids do not match');
+            }
+        }
+        
+        Test.startTest();
+            Database.executeBatch(new OwnersUpdateForAccountBatch(oldUserId, newUser.Id));
+        Test.stopTest();
+        
+
+        List<Account> accountsAfterBatchExecution = [Select Id, Name, OwnerId From Account];
+        System.assertEquals(2, accountsAfterBatchExecution.size(), 'Incorrect number of Accounts');
+        for(Account acc: accountsAfterBatchExecution) {
+            System.assertEquals(newUser.Id, acc.OwnerId, 'Owner ids do not match');
+        }
+    }
+}
+
 
