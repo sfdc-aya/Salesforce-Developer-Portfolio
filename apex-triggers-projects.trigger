@@ -727,6 +727,31 @@ trigger SendMassEmail on Account (after update) {
 }
 
 
+28. Auto-Insert Contacts (Account Obj)
+Use case: When Account record is created auto insert contacts and associate it to Account records;
+
+trigger AutoInsertContacts on Account (after insert) {
+    List<Contact> conList = new List<Contact>();
+    
+    If(Trigger.isExecuting && Trigger.isAfter && Trigger.isInsert){
+        for(Account a : Trigger.new){
+            Contact c = new Contact();
+            c.LastName = a.Name;
+            c.FirstName = 'Ms. ';
+            c.accountId = a.id;
+            conList.add(c);
+        }
+    }
+    insert conList;
+}
+
+
+29. Auto Insert Accounts (Contact Obj)
+Use case: When Contact records are inserted, auto insert accounts;
+
+
+
+
 
 
 
