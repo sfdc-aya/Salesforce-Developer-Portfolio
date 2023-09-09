@@ -781,7 +781,34 @@ trigger AutoInsertAccounts on Contact (after insert) {
 }
 
 
+30. Update custom fields on Account obj (Account obj)
+Use case: Whenever a create opportunity object records updated total opportunities and total oppty amount on the Account Obj should be updated
 
+trigger UpdateCustomFields on Opportunity (after update) {
+    Set<Id> acIds = new Set<ID>();
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isUpdate){
+        for(Opportunity o : trigger.new){
+            acIds.add(o.accountId);
+        }
+    }
+    List<Account> acList = [Select Id, Total_Opportunities__c , Total_Oppty_Amount__c , (Select Id, Amount from Opportunities) from Account where Id in :acIds];
+   
+      if(acList.size()>0){
+         for(Account a : acList){
+              a.Total_Opportunities__c s = acList.opportunities.size();
+              Decimal sum = 0;	
+             
+             for(opportunity o : a.Opportunities){
+                 sum += o.Amount;
+             	}
+             a.Total_Oppty_Amount__c  = sum;
+         	}
+          update acList;
+        }
+}
+
+
+31.
 
 
 
