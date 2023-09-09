@@ -809,6 +809,17 @@ trigger UpdateCustomFields on Opportunity (after update) {
 
 
 31.
+Use case:
+
+trigger UpdateContactDep on Contact (before insert, before update) {
+    if(Trigger.isExecuting && Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate){
+        for(Contact c : Trigger.new){
+            if(c.Department == 'CSE'){
+                c.Email = 'cseprioritycontact@gmail.com'
+            }
+        }
+    }
+}
 
 
 
