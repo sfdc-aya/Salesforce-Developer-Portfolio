@@ -808,8 +808,8 @@ trigger UpdateCustomFields on Opportunity (after update) {
 }
 
 
-31.
-Use case:
+31. Update Contact Email Based on Department (Contact Obj)
+Use case: If contact record department is CSE update email address.
 
 trigger UpdateContactDep on Contact (before insert, before update) {
     if(Trigger.isExecuting && Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate){
@@ -821,6 +821,8 @@ trigger UpdateContactDep on Contact (before insert, before update) {
     }
 }
 
+
+32.
 
 
 
