@@ -749,6 +749,37 @@ trigger AutoInsertContacts on Account (after insert) {
 29. Auto Insert Accounts (Contact Obj)
 Use case: When Contact records are inserted, auto insert accounts;
 
+//Apex class
+public class StopInfiniteLoop {
+    private static Boolean hasRun = false;
+    
+    public static Boolean hasRun(){
+        if(hasRun){
+            return true;
+        }else{
+       	 	hasRun = true;
+            return false;
+        }
+    }
+}
+
+//Trigger
+trigger AutoInsertAccounts on Contact (after insert) {
+    List<Account> aList = new List<Account>();
+    
+    if(Trigger.isExecuting && Trigger.isAfter && Trigger.isInsert){
+        for(Contact c : Trigger.new){
+            if(StopInfiniteLoop.hasRun()){
+                Account a = new Account();
+                a.Name = c.LastName;
+                a.Phone = c.Phone;
+                aList.add(a);
+            }
+        }
+    }
+    insert aList;
+}
+
 
 
 
