@@ -4,7 +4,7 @@ Use case: Develop a trigger to auto-assign newly generated and existing leads to
 trigger LeadAssignMent on Lead (before insert, before update) {
     if(Trigger.isExecuting && Trigger.isBefore && Trigger.isInsert){ 
         for(Lead l : Trigger.new){
-            if(l.Industry == 'Banking' && l.Status == 'Open - Not Contacted'){
+            if(l.Industry == 'Banking' && l.Status == 'Open - Not Contacted'){ 
                 l.OwnerId = '0058b00000Hg415AAB';
             }
         }
