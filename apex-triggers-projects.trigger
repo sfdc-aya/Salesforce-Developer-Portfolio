@@ -822,7 +822,23 @@ trigger UpdateContactDep on Contact (before insert, before update) {
 }
 
 
-32.
+32. Throw Error if limit's been reached (Account Obj);
+Use case: if daily limit has been reached throw custom error.
+
+trigger ThrowLimitError on Account (before insert) {
+    if(Trigger.isExecuting && Trigger.isBefore && Trigger.isInsert){
+        Integer count = 0;
+        
+    	List<Account> acList = [Select Id from Account where LastModifiedDate = today() or createdDate = today()];
+        for(Account a : Trigger.new){
+           count = a.size();
+            a.NumberofLocations__c = count;
+            if(count>2){
+                a.addError('Reached Daily Limit');
+            }
+        }
+    }
+}
 
 
 
