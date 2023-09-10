@@ -809,7 +809,7 @@ trigger UpdateCustomFields on Opportunity (after update) {
 
 
 31. Update Contact Email Based on Department (Contact Obj)
-Use case: If contact record department is CSE update email address.
+Use case: If the contact record department is CSE update the email address.
 
 trigger UpdateContactDep on Contact (before insert, before update) {
     if(Trigger.isExecuting && Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate){
@@ -823,7 +823,7 @@ trigger UpdateContactDep on Contact (before insert, before update) {
 
 
 32. Throw Error if limit's been reached (Account Obj);
-Use case: if daily limit has been reached throw custom error.
+Use case: if the daily limit has been reached throw a custom error.
 
 trigger ThrowLimitError on Account (before insert) {
     if(Trigger.isExecuting && Trigger.isBefore && Trigger.isInsert){
@@ -831,7 +831,7 @@ trigger ThrowLimitError on Account (before insert) {
         
     	List<Account> acList = [Select Id from Account where LastModifiedDate = today() or createdDate = today()];
         for(Account a : Trigger.new){
-           count = a.size();
+            count = a.size();
             a.NumberofLocations__c = count;
             if(count>2){
                 a.addError('Reached Daily Limit');
