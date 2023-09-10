@@ -841,6 +841,35 @@ trigger ThrowLimitError on Account (before insert) {
 }
 
 
+33. The user shouldn't be able to modify Account Obj (Account Obj)
+Use case: throw an error if the user tries to modify Account Object records
+
+trigger ThrowErrorAcc on Account (before insert, before delete, before update) {
+	User u = [Select Id, Email 
+              from User 
+              Where Email = 'zainmailk@gmail.com'];
+    if(u.id == userInfo.getUserId()){
+        if(Trigger.isExecuting && Trigger.isBefore && Trigger.isInsert){
+            for(Account a : Trigger.new){
+                a.addError('you can not insert an account record');
+            }
+        }
+         if(Trigger.isExecuting && Trigger.isBefore && Trigger.isUpdate){
+            for(Account a : Trigger.new){
+                a.addError('you can not insert an account record');
+            }
+        }
+         if(Trigger.isExecuting && Trigger.isBefore && Trigger.isDelete){
+            for(Account a : Trigger.old){
+                a.addError('you can not insert an account record');
+            }
+        }
+    }
+}
+
+
+
+
 
 
 
