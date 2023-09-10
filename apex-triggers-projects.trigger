@@ -883,6 +883,18 @@ trigger ThrowAcc on Contact (before insert) {
 }
 
 
+35. Option #2 Throw error already existing records
+trigger ThrowAcc on Contact (before insert) {
+    if(Trigger.isExecuting && Trigger.isBefore && Trigger.isInsert){
+        for(Contact c: Trigger.new){
+           List<Contact> conList = [Select Id, Email from Contact where Email = : c.email];
+            if(conList.size()>0){
+                c.Email.addError('contact with this email already exists');
+            }
+        }
+    }
+}
+
 
 
 
