@@ -869,7 +869,19 @@ trigger ThrowErrorAcc on Account (before insert, before delete, before update) {
 
 
 34. Throw error already existing records
-Use case: If record already exists throw an error
+Use case: If the record already exists throw an error
+
+trigger ThrowAcc on Contact (before insert) {
+    Contact c = [Select Id, Email from Contact where Email = 'zmalik@gmail.com' Limit 1];
+    if(Trigger.isExecuting && Trigger.isBefore && Trigger.isInsert){
+        for(Contact c: Trigger.new){
+            if(c.Email == c.Email){
+                c.Email.addError('contact record with this email already exists');
+            }
+        }
+    }
+}
+
 
 
 
