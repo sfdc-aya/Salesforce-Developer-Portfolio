@@ -868,6 +868,9 @@ trigger ThrowErrorAcc on Account (before insert, before delete, before update) {
 }
 
 
+34. Throw error already existing records
+Use case: If record already exists throw an error
+
 
 
 
