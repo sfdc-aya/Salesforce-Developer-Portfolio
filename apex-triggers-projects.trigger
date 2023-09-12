@@ -896,6 +896,11 @@ trigger ThrowAcc on Contact (before insert) {
 }
 
 
+36. Update afield with # of Contacts
+Use case: create custom field on Account obj, and update it with the # of associated contacts
+
+
+
 
 
 
