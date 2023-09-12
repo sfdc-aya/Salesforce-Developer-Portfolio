@@ -896,7 +896,7 @@ trigger ThrowAcc on Contact (before insert) {
 } 
 
 
-36. Update afield with # of Contacts
+36. Update a field with # of Contacts 
 Use case: create custom field on Account obj, and update it with the # of associated contacts
 
 trigger AssocContacts on Contact (after insert, after update) {
