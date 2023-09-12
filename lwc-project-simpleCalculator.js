@@ -1,4 +1,4 @@
-simpleCalculator.html
+///simpleCalculator.html
 <template>
     <lightning-card title = 'Simple Calculator' icon-name="standard:formula">
         <lightning-layout multiple-rows>
@@ -39,9 +39,9 @@ simpleCalculator.html
     </lightning-card>
 </template>
 
-simpleCalculator.js
-import { LightningElement, track } from 'lwc';
 
+///simpleCalculator.js
+import { LightningElement, track } from 'lwc';
 export default class SimpleCalculator extends LightningElement {
     @track currentResult;
     @track previousResults = [];
