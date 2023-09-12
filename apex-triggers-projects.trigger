@@ -300,7 +300,7 @@ trigger MarkClosedLost on Account (after update) {
 }
 
 
-14. Notify System Administrator
+14. Notify System Administrator (Account Obj)
 Use case: Once an Account is inserted an email should go to the System Admin user with specified text below.
 
 trigger NotifySystemAdmin on Account (after insert) {
