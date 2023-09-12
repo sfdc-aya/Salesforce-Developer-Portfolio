@@ -94,7 +94,5 @@ export default class SimpleCalculator extends LightningElement {
     showPreviousResultToggle(event){
         this.showPreviousResults = event.target.checked;
     }
-
 }
-//meta.xml
 
