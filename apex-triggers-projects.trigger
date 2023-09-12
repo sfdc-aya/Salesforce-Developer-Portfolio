@@ -921,6 +921,29 @@ trigger AssocContacts on Contact (after insert, after update) {
 37. Update Rating (Opportunity Obj)
 Use case: update account rating when oppty stage is closed won
 
+trigger UpdateRating on Opportunity (after update) {
+    Set<ID> accountIds = new Set<ID>();
+    List<Account> finalAccounts = new List<Account>();
+    
+	for(Opportunity o: Trigger.new){
+        if(o.StageName == 'Closed Won' && Trigger.oldMap.get(o.id).StageName != 'Closed Won'){
+            accountIds.add(o.accountId);
+        }
+    }
+    if(accountIds.size()>0){
+        List<Account> acList = [Select Id, Rating from Account Where Id in: accountIds];
+        
+        if(acList.size()>0){
+            for(Account a : acList){
+           	 	a.Rating = 'Hot';
+            	finalAccounts.add(a);
+        	}
+        }
+    }
+    if(finalAccounts.size()>0){
+        update finalAccounts;
+    }
+}
 
 
 
