@@ -868,7 +868,7 @@ trigger ThrowErrorAcc on Account (before insert, before delete, before update) {
 }
 
 
-34. Throw error already existing records
+34. Throw error already existing records (Contact Obj)
 Use case: If the record already exists throw an error
 
 trigger ThrowAcc on Contact (before insert) {
