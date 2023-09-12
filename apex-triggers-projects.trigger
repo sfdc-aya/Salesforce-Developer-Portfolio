@@ -899,7 +899,23 @@ trigger ThrowAcc on Contact (before insert) {
 36. Update afield with # of Contacts
 Use case: create custom field on Account obj, and update it with the # of associated contacts
 
-
+trigger AssocContacts on Contact (after insert, after update) {
+   Set<ID> accIds = new Set<ID>();
+    
+    if(Trigger.isExecuting && Trigger.isAfter && (Trigger.isInsert || Trigger.isUpdate)){
+        for(Contact c :Trigger.new){
+            if(c.accountId != null){
+                accIds.add(c.accountId);
+            }
+    	}
+    }
+    
+    List<Account> acList = [Select Id, NumOfContacts__c, (Select Id from Contacts) from Account where id in : accIds];
+    
+    for(Account a : acList){
+        a.NumOfContacts__c = a.Contacts.size();
+    }
+}
 
 
 
