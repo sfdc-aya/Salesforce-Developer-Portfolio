@@ -918,6 +918,9 @@ trigger AssocContacts on Contact (after insert, after update) {
 }
 
 
+37. Update Rating
+
+
 
 
 
