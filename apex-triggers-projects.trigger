@@ -883,7 +883,7 @@ trigger ThrowAcc on Contact (before insert) {
 }
 
 
-35. Option #2 Throw error already existing records
+35. Option #2 Throw error already existing records (Contact Obj)
 trigger ThrowAcc on Contact (before insert) {
     if(Trigger.isExecuting && Trigger.isBefore && Trigger.isInsert){
         for(Contact c: Trigger.new){
