@@ -946,6 +946,10 @@ trigger UpdateRating on Opportunity (after update) {
 }
 
 
+38. If Name is Naveen, update last names.
+Use case: Whenever the account name is naveen, auto-update the contact all last names.
+
+
 
 
 
