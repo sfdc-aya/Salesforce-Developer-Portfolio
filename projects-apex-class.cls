@@ -371,4 +371,14 @@ public Boolean isPrime(Integer candidate) {
 26. Insert Student
 Use case: The method insertStudent takes as input strings name and email, and returns a record ID. Implement the method to insert an apxio__Student__c record with the Name and apxio__Email__c fields filled out, and return the Id of the new record.
 
+public Id insertStudent(String name, String email) {
+   apxio__Student__c stu = new apxio__Student__c();
+   stu.name = name;
+   stu.apxio__Email__c = email;
+   insert stu;
+
+   return stu.id;
+}
+
+27.
 
