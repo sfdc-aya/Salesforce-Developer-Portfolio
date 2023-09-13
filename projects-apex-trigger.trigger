@@ -1016,7 +1016,7 @@ trigger AutoConvertLeads on Lead (after insert) {
     }
 }
 
-
+//Test class
 @isTest
 public class AutoConvertLeadsTest {
     @isTest
