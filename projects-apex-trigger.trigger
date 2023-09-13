@@ -972,7 +972,10 @@ trigger UpdateLastNames on Account (after update) {
 }
 
 
-39.
+39. Auto Convert Lead (Lead Obj)
+Use case: when lead is converted, auto create Account, Contact and Opportunity Records.
+
+
 
 
 
