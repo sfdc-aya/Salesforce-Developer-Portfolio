@@ -949,6 +949,27 @@ trigger UpdateRating on Opportunity (after update) {
 38. If Name is Naveen, update last names.
 Use case: Whenever the account name is naveen, auto-update the contact all last names.
 
+trigger UpdateLastNames on Account (after update) {
+    Set<ID> acIds = new Set<ID>();
+    List<Contact> contacts = new List<Contact>();
+    for(Account a : Trigger.new){
+        if(a.name == 'Naveen'){
+            acIds.add(a.id);
+        }
+    }
+    if(acIds.size()>0){
+        List<Contact> conList = [Select Id, AccountID, LastName, Account.Name from Contact where AccountID =: acIds];
+        if(conList.size()>0){
+            for(Contact c : conList){
+                c.LastName = c.Account.Name;
+                contacts.add(c);
+            }
+        }       
+    }
+    if(contacts.size()>0){
+        update contacts;
+    }
+}
 
 
 
