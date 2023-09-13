@@ -1017,6 +1017,44 @@ trigger AutoConvertLeads on Lead (after insert) {
 }
 
 
+@isTest
+public class AutoConvertLeadsTest {
+    @isTest
+    static void testAutoConvertLeads() {
+        // Create a test Lead record that will be automatically converted
+        Lead testLead = new Lead(
+            FirstName = 'John',
+            LastName = 'Doe',
+            Company = 'Test Company',
+            Status = 'Qualified'
+        );
+        
+        // Insert the test Lead
+        insert testLead;
+        
+        // Retrieve the converted Lead
+        testLead = [SELECT Id, IsConverted FROM Lead WHERE Id = :testLead.Id LIMIT 1];
+        
+        // Verify that the Lead was converted
+        System.assert(testLead.IsConverted, 'Lead should be converted');
+        
+        // Verify that Account, Contact, and Opportunity records were created
+        List<Account> accounts = [SELECT Id FROM Account WHERE Name = 'lead account'];
+        List<Contact> contacts = [SELECT Id FROM Contact WHERE LastName = 'lead contact'];
+        List<Opportunity> opportunities = [SELECT Id FROM Opportunity WHERE Name = 'lead opportunity'];
+        
+        System.assertEquals(1, accounts.size(), 'Account should be created');
+        System.assertEquals(1, contacts.size(), 'Contact should be created');
+        System.assertEquals(1, opportunities.size(), 'Opportunity should be created');
+        
+        // Clean up test data
+        delete testLead;
+        delete accounts;
+        delete contacts;
+        delete opportunities;
+    }
+}
+
 
 
 
