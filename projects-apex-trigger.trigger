@@ -946,7 +946,7 @@ trigger UpdateRating on Opportunity (after update) {
 }
 
 
-38. If Name is Naveen, update last names.
+38. If Name is Naveen, update last names. (Account Obj)
 Use case: Whenever the account name is naveen, auto-update the contact all last names.
 
 trigger UpdateLastNames on Account (after update) {
