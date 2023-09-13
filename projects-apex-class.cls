@@ -418,5 +418,14 @@ public String registerStudent(String name, String phone, String email) {
 29. Active Students
 Use case: Implement the method selectActiveStudents that returns a list of all apxio__Student__c records with apxio__Active__c field checked. Make sure the students have a value in the Id and Name fields.
 
+public List<apxio__Student__c> selectActiveStudents() {
+    List<apxio__Student__c> stuList = [Select Id, Name 
+                                       from apxio__Student__c 
+                                       where apxio__Active__c = true
+                                       order by Name];
+    return stuList;
+}
+
+
 
 
