@@ -380,5 +380,6 @@ public Id insertStudent(String name, String email) {
    return stu.id;
 }
 
-27.
+27. Insert Course
+Use case: 
 
