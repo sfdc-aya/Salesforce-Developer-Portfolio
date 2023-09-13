@@ -368,3 +368,4 @@ public Boolean isPrime(Integer candidate) {
     return true;
 
 
+26. Insert Student
