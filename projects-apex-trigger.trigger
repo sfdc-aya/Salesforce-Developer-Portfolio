@@ -973,9 +973,48 @@ trigger UpdateLastNames on Account (after update) {
 
 
 39. Auto Convert Lead (Lead Obj)
-Use case: when lead is converted, auto create Account, Contact and Opportunity Records.
+Use case: When the lead is converted, auto-create Account, Contact, and Opportunity Records.
 
-
+trigger AutoConvertLeads on Lead (after insert) {
+    List<Account> accounts = new List<Account>();
+    List<Opportunity> opportunities = new List<Opportunity>();
+    List<Contact> contacts = new List<Contact>();
+    List<Lead> convertedLeads = new List<Lead>();
+    
+    for(Lead l : Trigger.new){
+        if(l.isConverted){
+            convertedLeads.add(l);
+        }
+    }
+    for(Lead l : convertedLeads){
+            Account a = new Account();
+            a.Name = 'lead account';
+            accounts.add(a);
+            
+            Contact c = new Contact();
+            c.LastName = 'lead contact';
+            contacts.add(c);
+        
+        	Opportunity o = new Opportunity();
+            o.Name = 'lead opportunity';
+            o.StageName = 'Closed Won';
+            o.Amount = 30000;
+            o.CloseDate = Date.today();
+        	o.AccountId = a.id;
+        	o.ContactId = c.id;
+            opportunities.add(o);
+    }
+    
+    if(accounts.size() >0){
+        insert accounts;
+    }
+    if(opportunities.size() >0){
+        insert opportunities;
+    }
+    if(contacts.size() >0){
+        insert contacts;
+    }
+}
 
 
 
