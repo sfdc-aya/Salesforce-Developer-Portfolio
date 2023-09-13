@@ -429,5 +429,16 @@ public List<apxio__Student__c> selectActiveStudents() {
 
 30. Unreachable Students
 
+public List<apxio__Student__c> selectUnreachableStudents() {
+    List<apxio__Student__c> unreachableStudents = [Select Id, Name 
+                                                   From apxio__Student__c
+                                                   where apxio__Active__c = true 
+                                                   and apxio__Email__c = null 
+                                                   and apxio__Phone__c = null
+                                                   order by Name
+                                                   limit 1]
+    return unreachableStudents;                                         
+}
+
 
 
