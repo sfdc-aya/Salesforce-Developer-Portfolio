@@ -1,1 +1,19 @@
-
+<template>
+    <lightning-card title="BMI Calculator" icon-name="custom:custom90">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" padding="around-medium">
+                <lightning-input type="number" name="weight" onchange={weightChange} placeholder="weight in kg"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-medium">
+                <lightning-input type="number" name="height"  onchange={heightChange} placeholder="height in cm"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-medium">
+                <lightning-button label="calculate" onclick={calculateBMI}>Calculate BMI</lightning-button>
+                <lightning-button label="reset" onclick={resetFields} style="margin-left: 10px;">Reset Fields</lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-medium">
+                <p>Your BMI is: {bmi}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>
