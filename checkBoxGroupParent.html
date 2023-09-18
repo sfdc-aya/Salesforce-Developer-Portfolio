@@ -1,1 +1,7 @@
-
+<template>
+    <lightning-card title="Call Methods On Child Component">
+        <lightning-input value={value} label="Checkbox Value" onchange={onInputChangeHandler}></lightning-input>
+        <lightning-button label="Select Checkbox" onclick={checkboxSelectHandler}></lightning-button>
+        <c-public-method-child ></c-public-method-child>
+    </lightning-card>
+</template>
