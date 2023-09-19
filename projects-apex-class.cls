@@ -634,4 +634,20 @@ public String getAccountsInJSONFormat(List<Account> accounts){
 43. List of sObjects
 Use case: 
 
+public List<sObject> getListOfsObject(List<Account> accounts, List<Contact> contacts){
+    List<sObject> objects = new List<sObject>();
+    
+    if(accounts != null){
+        for(Account a : accounts){
+            objects.add(a);
+        }
+    }
+    if(contacts != null){
+        for(Contact c : contacts){
+            objects.add(c);
+        }
+    }
+    return objects;
+}
+
 
