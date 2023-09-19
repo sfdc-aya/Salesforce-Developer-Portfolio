@@ -593,3 +593,7 @@ public List<Account> checkAccounts(List<Account> accounts){
 }
 
 public class AccountException extends Exception {}
+
+
+40. Safe Navigation Operator
+Use case: 
