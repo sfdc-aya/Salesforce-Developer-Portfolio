@@ -580,3 +580,16 @@ Use case: Implement the method checkAccounts, which accepts a list of accounts a
           accounts.add(new Account(name ='Salesforce', BillingCity ='Boston'));
           accounts.add(new Account(name ='Microsoft'));
 
+public List<Account> checkAccounts(List<Account> accounts){
+    if(accounts == null){
+        throw new IllegalArgumentException('accounts can not be null');
+    }
+    for(Account a : accounts){
+        if(a.BillingCity == null){
+            throw new AccountException('BullingCity is not valid');
+        }
+    }
+    return accounts;
+}
+
+public class AccountException extends Exception {}
