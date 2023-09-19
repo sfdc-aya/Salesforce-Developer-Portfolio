@@ -550,4 +550,12 @@ Use case: Implement the method convert15to18DigitId() , which accepts a String o
 	  String eighteenDigit = convert15to18DigitId(fifteenDigit);
 	  eighteenDigit should be equal to '0SO90000000PBDuGAO'
 
+public String convert15to18DigitId(String fifteenDigit){
+    if(fifteenDigit?.length() == 15){
+        return (id)fifteenDigit;
+    }
+        return '-1';
+}
 
+
+38. 
