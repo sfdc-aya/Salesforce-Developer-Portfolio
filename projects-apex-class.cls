@@ -490,4 +490,5 @@ public void insertStudents(List<String> studentNames, List<String> studentEmails
 }
 
 
-34.
+34. Class from Course
+Use case: 
