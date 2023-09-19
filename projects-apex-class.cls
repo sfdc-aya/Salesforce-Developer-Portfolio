@@ -568,3 +568,6 @@ public String divide(Integer a, Integer b){
         return e.getMessage();
     }
 }
+
+
+39. Throw An Exception
