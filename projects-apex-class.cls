@@ -514,3 +514,19 @@ public Id classFromCourse(String courseName) {
 Use case: Implement the method enrollStudents that takes as input a list of strings emails and a string className and returns a boolean. The method should enroll all students with the provided emails into a class with the given name by creating apxio__Class_Enrollment__c records.
           Note that apxio__Student__c and apxio__Class__c records already exist in the database
 
+public void enrollStudents(List<String> emails, String className) {
+    List<apxio__Student__c> stu = [Select Id, apxio__Email__c from apxio__Student__c where apxio__Email__c in: emails];
+    List<apxio__Class__c> cls = [Select Id, Name from apxio__Class__c where apxio__Class__c =: className];
+    List<apxio__Class_Enrollment__c> enrs = new List<apxio__Class_Enrollment__c>();
+
+    for(Integer i=0; i< stu.size(); i++){
+        apxio__Class_Enrollment__c enr = new apxio__Class_Enrollment__c();
+        enr.apxio__Student__c = stu[i].id;
+        enr.apxio__Offered_Class__c = cls[i].id;
+
+        enrs.add(enr);
+    }
+    if(enrs.size()>0){
+        insert enrs;
+    }
+}
