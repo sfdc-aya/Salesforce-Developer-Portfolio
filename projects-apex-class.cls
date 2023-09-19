@@ -625,3 +625,4 @@ public List<String> getFieldsValue(Account acc, List<String> fields){
 42. Serialize sObjects
 Use case: Implement the method getAccountsInJSONFormat(), a list of accounts and returns a list of accounts in string JSON format.
 
+
