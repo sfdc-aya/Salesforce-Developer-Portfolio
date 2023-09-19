@@ -611,3 +611,12 @@ Use case: Implement the method getFieldsValue, which accepts the following input
 	  A list of strings fields, with each string in the list representing a valid field on the account object.
 	  The method should return a list of values from the account record for fields listed in the list fields in the correct order.
 
+public List<String> getFieldsValue(Account acc, List<String> fields){
+   List<String> results = new List<String>();
+
+   for(String field : fields){
+       String result = String.valueOf(acc.get(field));
+       results.add(result);
+   }
+   return results;
+}
