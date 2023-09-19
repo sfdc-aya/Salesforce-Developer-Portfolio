@@ -477,3 +477,17 @@ public void createCourseAndClass(String name, String description) {
 Use case: The method insertStudents takes as input two lists of strings studentNames and studentEmails. The two lists will always have the same size, with studentNames[i] and studentEmails[i] (for any in-range value of i) representing a student's name and email.
 	  Write an implementation of the method that creates apxio__Student__c records for each entry in the lists with the Name and apxio__Email__c fields filled out.
 
+public void insertStudents(List<String> studentNames, List<String> studentEmails) {
+    List<apxio__Student__c> stus = new List<apxio__Student__c>();
+
+    for(Integer i=0; i<studentNames.size(); i++){
+        apxio__Student__c student = new apxio__Student__c();
+        student.name = studentNames[i];
+        student.apxio__Email__c = studentEmails[i];
+        stus.add(student);
+    }
+    insert stus;
+}
+
+
+34.
