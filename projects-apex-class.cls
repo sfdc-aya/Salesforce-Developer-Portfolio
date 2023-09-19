@@ -491,4 +491,6 @@ public void insertStudents(List<String> studentNames, List<String> studentEmails
 
 
 34. Class from Course
-Use case: 
+Use case: Implement the method classFromCourse that takes as input a string courseName, creates an apxio__Class__c record associated with the course named courseName, and returns the Id of the new record. The new class should have the same Name as the course.
+	  You should not create a new apxio__Course__c record. The new class should be linked to the course that already exists in the database. In case no course with the given name is found, do not create any class record and return null.
+
