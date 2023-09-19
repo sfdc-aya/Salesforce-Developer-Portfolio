@@ -1059,6 +1059,35 @@ public class AutoConvertLeadsTest {
 40. Auto Update Opptie fields (Contact Obj)
 Use case: Whenever a contact created, auto update associated Opportunities fields
 
+trigger AutoUpdateOppties on Contact (after insert) {
+    Set<ID> contactIds = new Set<ID>();
+    List<Opportunity> opportunitiesToUpdate = new List<Opportunity>();
+
+    if (Trigger.isExecuting && Trigger.isAfter && Trigger.isInsert) {
+        for (Contact c : Trigger.new) {
+            contactIds.add(c.Id);
+        }
+
+        if (!contactIds.isEmpty()) {
+            List<Opportunity> opportunities = [
+                SELECT Id, Description
+                FROM Opportunity
+                WHERE ContactId IN :contactIds
+            ];
+
+            for (Opportunity o : opportunities) {
+                o.Description = 'Closed Opportunity of a Contact ' + o.ContactId + ' ';
+                opportunitiesToUpdate.add(o);
+            }
+
+            if (!opportunitiesToUpdate.isEmpty()) {
+                update opportunitiesToUpdate;
+            }
+        }
+    }
+}
+
+
 
 
 
