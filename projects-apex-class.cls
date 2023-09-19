@@ -676,6 +676,7 @@ public Map<String,String> getContextUserInformation(){
    };
 }
 
+
 46. Trigger Validation
 Use case: Implement the method validateInsert, which accepts a newly inserted list of opportunities as an input and adds errors to the opportunity fields as follows: if the opportunity record's StageName is 'Closed Won' and the Description is null or empty, add an error on the Description field of that record with the error message set to 'Description should not be empty for Closed Won opportunity.'
 
@@ -686,3 +687,7 @@ public void validateInsert(List<Opportunity> opportunities){
         }
     }
 }
+
+
+47. Sort List of sObjects
+Use case: Implement the method getAccounts(), function, which accepts a list of accounts as input and returns a new list of accounts sorted in descending order based on the Annual Revenue field.
