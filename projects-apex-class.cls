@@ -559,3 +559,12 @@ public String convert15to18DigitId(String fifteenDigit){
 
 
 38. 
+
+
+public String divide(Integer a, Integer b){
+    try{
+        return String.valueOf(a/b);
+    }catch(Exception e){
+        return e.getMessage();
+    }
+}
