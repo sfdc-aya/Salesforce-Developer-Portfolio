@@ -632,7 +632,7 @@ public String getAccountsInJSONFormat(List<Account> accounts){
 
 
 43. List of sObjects
-Use case: 
+Use case: Implement the method getListOfsObject(), which accepts two parameters, a list of accounts, and a list of contacts, as an input and returns a list of sObjects. If both lists are empty or null, return an empty list of sObject.
 
 public List<sObject> getListOfsObject(List<Account> accounts, List<Contact> contacts){
     List<sObject> objects = new List<sObject>();
