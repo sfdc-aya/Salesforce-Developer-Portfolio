@@ -558,8 +558,8 @@ public String convert15to18DigitId(String fifteenDigit){
 }
 
 
-38. 
-
+38. Handle Exception
+Use case: Implement the method divide which takes two integers a and b as input, divides a by b using the / operator, and returns the result. If any exception occurs, the method should return the exception message.
 
 public String divide(Integer a, Integer b){
     try{
