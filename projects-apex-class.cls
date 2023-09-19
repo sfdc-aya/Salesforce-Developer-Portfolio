@@ -675,3 +675,13 @@ public Map<String,String> getContextUserInformation(){
        'Type' => UserInfo.getUserType()
    };
 }
+
+46. 
+
+public void validateInsert(List<Opportunity> opportunities){
+    for(Opportunity o : opportunities){
+        if(o.StageName == 'Closed Won' && (o.Description == null || o.Description == '' )){
+            o.Description.addError('Description should not be empty for Closed Won opportunity.');
+        }
+    }
+}
