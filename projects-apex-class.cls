@@ -511,4 +511,6 @@ public Id classFromCourse(String courseName) {
 
 
 35. Enroll Students
-Use case: 
+Use case: Implement the method enrollStudents that takes as input a list of strings emails and a string className and returns a boolean. The method should enroll all students with the provided emails into a class with the given name by creating apxio__Class_Enrollment__c records.
+          Note that apxio__Student__c and apxio__Class__c records already exist in the database
+
