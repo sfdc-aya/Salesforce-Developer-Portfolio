@@ -664,4 +664,5 @@ public List<Account> getAccountsFromJSONString(String inputJSON){
 }
 
 
-45.
+45. Context User
+Use case: Implement the method getContextUserInformation(), which returns a Map of the current logged in user's (context user's) UserName, ProfileId, EmailId, and Type as keys and their field values as corresponding values in the map. 
