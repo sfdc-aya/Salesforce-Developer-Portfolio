@@ -494,3 +494,17 @@ public void insertStudents(List<String> studentNames, List<String> studentEmails
 Use case: Implement the method classFromCourse that takes as input a string courseName, creates an apxio__Class__c record associated with the course named courseName, and returns the Id of the new record. The new class should have the same Name as the course.
 	  You should not create a new apxio__Course__c record. The new class should be linked to the course that already exists in the database. In case no course with the given name is found, do not create any class record and return null.
 
+public Id classFromCourse(String courseName) {
+    List<apxio__Course__c> course = [Select Id, name from apxio__Course__c where apxio__Course__c =: courseName];
+
+    if(course.isEmpty()){
+        return null;
+    }
+    
+    apxio__Class__c cl = new apxio__Class__c();
+    cl.name = course[0].Name;
+    cl.apxio__Course__c = course[0].id;
+    insert cl;
+
+    return cl.id;
+}
