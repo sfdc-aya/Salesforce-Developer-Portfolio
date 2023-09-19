@@ -603,3 +603,11 @@ public String getAccountBillingCityWithSafeNavigation(List<Account> accounts){
    String billingC = accounts[0].BillingCity?.toUpperCase();
    return billingC;
 }
+
+
+41. Dynamic Field Values
+Use case: Implement the method getFieldsValue, which accepts the following inputs:
+          An account acc
+	  A list of strings fields, with each string in the list representing a valid field on the account object.
+	  The method should return a list of values from the account record for fields listed in the list fields in the correct order.
+
