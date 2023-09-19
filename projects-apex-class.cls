@@ -532,8 +532,8 @@ public void enrollStudents(List<String> emails, String className) {
 }
 
 
-36.
-
+36. sObject Type
+Use case: 
 
 public Boolean isTypeAccount(sObject record){
    if(record instanceOf Account){
