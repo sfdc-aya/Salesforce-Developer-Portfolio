@@ -508,3 +508,7 @@ public Id classFromCourse(String courseName) {
 
     return cl.id;
 }
+
+
+35. Enroll Students
+Use case: 
