@@ -652,3 +652,6 @@ public List<sObject> getListOfsObject(List<Account> accounts, List<Contact> cont
 
 
 44. Deserialize sObjects
+Use case: Implement the method getAccountsFromJSONString, which takes a JSON string of a list of accounts as an input and returns a list of accounts. If the input string is empty or null, return null.
+
+
