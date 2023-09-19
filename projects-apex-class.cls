@@ -651,3 +651,4 @@ public List<sObject> getListOfsObject(List<Account> accounts, List<Contact> cont
 }
 
 
+44. Deserialize sObjects
