@@ -445,3 +445,15 @@ public List<apxio__Student__c> selectUnreachableStudents() {
 31. Students Missing Info
 Use case: Implement the method selectStudentsWithoutContactInfo that queries for and returns a list of all active apxio__Student__c records that are missing an email, phone, or both. Make sure to include the Id and Name fields in the result. The returned list should be sorted A-Z on Name.
 
+public List<apxio__Student__c> selectStudentsWithoutContactInfo() {
+    List<apxio__Student__c> students = [Select Id, Name
+                                        from apxio__Student__c
+                                        where apxio__Active__c = true
+                                        and apxio__Email__c = null
+                                        or apxio__Phone__c = null
+                                        or (apxio__Phone__c and apxio__Email__c order by Name)];
+    return students
+}
+
+32. Course and Class
+Use case: 
