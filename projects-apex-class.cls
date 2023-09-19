@@ -533,7 +533,7 @@ public void enrollStudents(List<String> emails, String className) {
 
 
 36. sObject Type
-Use case: 
+Use case: Implement the method isTypeAccount(), which accepts a sObject as input and returns a true if type of input is Account object else it should return as false.
 
 public Boolean isTypeAccount(sObject record){
    if(record instanceOf Account){
@@ -542,4 +542,6 @@ public Boolean isTypeAccount(sObject record){
        return false;
 }
 
+
+37. 
 
