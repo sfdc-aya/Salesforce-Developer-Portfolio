@@ -1056,7 +1056,8 @@ public class AutoConvertLeadsTest {
 }
 
 
-40.
+40. Auto Update Opptie fields (Contact Obj)
+Use case: Whenever a contact created, auto update associated Opportunities fields
 
 
 
