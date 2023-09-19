@@ -596,4 +596,6 @@ public class AccountException extends Exception {}
 
 
 40. Safe Navigation Operator
-Use case: 
+Use case: Implement the method getAccountBillingCityWithSafeNavigation, which accepts a list of accounts as an input and returns the BillingCity in upper case of the first account in the list. Use the Safe Navigation (?.) to ensure null is returned in case the BillingCity is null.
+          Given the following test code:
+
