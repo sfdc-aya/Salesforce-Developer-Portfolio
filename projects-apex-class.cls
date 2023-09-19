@@ -532,3 +532,14 @@ public void enrollStudents(List<String> emails, String className) {
 }
 
 
+36.
+
+
+public Boolean isTypeAccount(sObject record){
+   if(record instanceOf Account){
+       return true;
+   }
+       return false;
+}
+
+
