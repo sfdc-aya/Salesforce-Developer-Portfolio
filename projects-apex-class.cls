@@ -971,7 +971,9 @@ public Integer maxConsecutiveOnes(Integer[] numbers) {
 
 
 63. Insert at Beginning
-Use case: 
+Use case: Implement a method that would take an element and a List of elements as arguments and return the same List with the element inserted at the 0th position.
+
+
 
 
 
