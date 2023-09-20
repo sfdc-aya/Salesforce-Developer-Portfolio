@@ -775,3 +775,19 @@ Use case: For this problem, we define minimum annual revenue thresholds an accou
 	  All others: 500,000
 	  Implement the method isKeyAccount that takes as input an Account with the AnnualRevenue field and the Industry picklist fields filled out, returns true if the account is a key account, and returns false otherwise.
 
+public Boolean isKeyAccount(Account a) {
+    if(a.Industry == 'Banking' && a.AnnualRevenue == 600000){
+        return true;
+    }else if(a.Industry == 'Technology' && a.AnnualRevenue == 800000){
+         return true;
+    }else if(a.Industry == 'Retail' && a.AnnualRevenue == 2000000){
+         return true;
+    }else if(a.Industry != null && a.AnnualRevenue == 500000){
+         return true;
+    }else{
+        return false;
+    }
+}
+
+
+52.
