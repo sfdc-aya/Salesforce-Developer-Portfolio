@@ -828,4 +828,7 @@ public Boolean sameParent(Account acc, Contact con, Opportunity opp) {
 }
 
 
+55. Set Parent Account
+Use case: 
+
 
