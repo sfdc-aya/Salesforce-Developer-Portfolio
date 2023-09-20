@@ -729,3 +729,9 @@ public class AccountWrapper implements Comparable {
         return -1;
     }
 }
+
+
+48. Duplicate Contacts
+Use case: For this problem, we consider two Contacts as duplicates if they have the same phone number or the same email address.
+	  Implement the method duplicateContacts that takes as input two Contact records c1 and c1, returns true if they are duplicates, and returns false otherwise.
+
