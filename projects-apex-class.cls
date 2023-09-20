@@ -757,3 +757,9 @@ public void setAccountRating(Account a) {
        }
 }
 
+
+50. Contact Birthday
+Use case: Given a Contact with the Birthdate field set to some date, return true if today is the Contact's birthday and return false if not. Assume that a future date will not be set on the Birthdate field.
+
+
+
