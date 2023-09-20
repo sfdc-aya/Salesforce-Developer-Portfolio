@@ -891,4 +891,21 @@ public static Integer arraySum(List<Integer> numbers) {
 Use case: Given a non-zero positive integer n, return a list of the first n non-zero positive even numbers, ordered ascending.
 	  Example: evenNumbers(5) returns a list containing the numbers 2, 4, 6, 8, 10.
 
+public List<Integer> evenNumbers(Integer n) {
+    List<Integer> nums = new List<Integer>();
+    if(n > 0){
+        Integer evenNum = 2;
+
+        while(n > 0){
+            nums.add(evenNum);
+            evenNum+=2;
+            n--;
+        }
+    }
+    return nums;
+}
+
+
+60. Largest Element
+Use case: 
 
