@@ -800,3 +800,7 @@ public void escalateIfMeetsCriteria(Case c) {
 }
 
 
+53. Same Parent
+Use case: Implement the method sameParent that takes as input an opportunity opp and a contact c, and returns true if both the opportunity and contact have the same parent account.
+
+
