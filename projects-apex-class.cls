@@ -869,3 +869,17 @@ public List<String> getNamesInAscOrder(List<String> accountNames){
         return accountNames;
 }
 
+
+58. 
+
+public static Integer arraySum(List<Integer> numbers) {
+    Integer sum = 0;
+    if(numbers == null){
+        return null;
+    }
+
+    for(Integer num : numbers){
+        sum += num;
+    }
+    return sum;
+}
