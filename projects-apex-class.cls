@@ -842,3 +842,18 @@ public void setParent(Account acc, Contact con, Opportunity opp) {
 56.
 
 
+public void linkParent(Case c1, Case c2) {
+        if (c1.ContactId != null && c2.ContactId != null) {
+            if (c1.ContactId == c2.ContactId) {
+                if (c1.CreatedDate < c2.CreatedDate) {
+                    c2.ParentId = c1.Id;
+                } else if(c1.CreatedDate > c2.CreatedDate){
+                    c1.ParentId = c2.Id;
+                }else{
+                    c1.ParentId = null;
+                    c2.ParentId = null;
+                }
+            }
+        }
+}
+
