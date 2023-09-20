@@ -870,7 +870,9 @@ public List<String> getNamesInAscOrder(List<String> accountNames){
 }
 
 
-58. 
+58. Array Sum
+Use case: Implement the method arraySum that takes as input a non-empty list of Integers numbers, and returns the sum of all numbers in the list.
+	  Example: arraySum(new List {5, 2, 3}) evaluates to 10.
 
 public static Integer arraySum(List<Integer> numbers) {
     Integer sum = 0;
@@ -883,3 +885,6 @@ public static Integer arraySum(List<Integer> numbers) {
     }
     return sum;
 }
+
+
+59. 
