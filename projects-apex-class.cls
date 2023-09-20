@@ -950,5 +950,25 @@ public List<Integer> positiveIntegers(List<Integer> numbers) {
 62. Consecutive Ones
 Use case: Given a List of Integers containing only binary numbers (0 and 1), return the maximum number of consecutive 1s appearing in the List.
 
+public Integer maxConsecutiveOnes(Integer[] numbers) {
+    Integer curr = 0;
+    Integer max = 0;
+
+    if(numbers == null){
+        return null;
+    }
+    for(Integer n : numbers){
+        if(n == 1){
+            curr++;
+            max = Math.max(max, curr);
+        }else {
+            curr = 0;
+        }
+    }
+    return max;
+}
+
+
+63.
 
 
