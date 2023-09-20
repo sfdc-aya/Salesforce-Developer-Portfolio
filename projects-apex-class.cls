@@ -971,5 +971,7 @@ public Integer maxConsecutiveOnes(Integer[] numbers) {
 
 
 63. Insert at Beginning
+Use case: 
+
 
 
