@@ -857,3 +857,14 @@ public void linkParent(Case c1, Case c2) {
         }
 }
 
+
+57.
+
+public List<String> getNamesInAscOrder(List<String> accountNames){
+    if(accountNames == null){
+        return null;
+    }
+        accountNames.sort();
+        return accountNames;
+}
+
