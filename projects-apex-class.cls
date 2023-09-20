@@ -739,3 +739,11 @@ public Boolean duplicateContacts(Contact c1, Contact c2) {
     return (c1.Email != null && c1.Email == c2.Email) ||
             (c2.Phone != null && c1.Phone == c2.Phone); 
 }
+
+
+49. Account Rating
+Use case: Implement a method setAccountRating that looks at an Account's AnnualRevenue, and sets the value of the Rating picklist field based on the following criteria:
+	  Accounts with AnnualRevenue less than or equal to 100,000 get a rating of "Cold"
+          Accounts with AnnualRevenue less than or equal to 500,000 but greater than 100,000 get a rating of "Warm"
+          Accounts with AnnualRevenue greater than 500,000 get a rating of "Hot"
+
