@@ -910,4 +910,25 @@ public List<Integer> evenNumbers(Integer n) {
 Use case: Implement the method findLargest that takes as input a non-empty list of Integers nums, and returns the largest Integer in the list.
 	  Example: findLargest(new List {5, 2, 8, 4, 2, 1}) evaluates to 8 because 8 is the largest Integer in the list.
 
+public static Integer findLargest(List<Integer> nums) {
+	Integer result = nums[0];
+
+    if(nums == null){
+        return null;
+    }
+
+    for(Integer n : nums){
+        if(n > result){
+            result = n;
+        }
+    }
+    return result;
+}
+
+
+61. Positive Integers
+Use case: A positive integer is defined as an integer greater than zero. Implement the method positiveIntegers that takes as input a list of integers numbers, and returns a new list with non-positive integers removed.
+          Example: positiveIntegers(new List {2, -3, 6, 2}) returns a list containing the numbers 2, 6, 2.
+
+
 
