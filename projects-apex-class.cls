@@ -839,8 +839,8 @@ public void setParent(Account acc, Contact con, Opportunity opp) {
 }
 
 
-56.
-
+56. Set Parent Case
+Use case: Implement the method linkParent that takes as input two cases c1 and c2, and sets the case created first as the parent of the case created later only if both cases look up to the same Contact. Ensure to handle the special case where the cases do not have any related contacts.
 
 public void linkParent(Case c1, Case c2) {
         if (c1.ContactId != null && c2.ContactId != null) {
