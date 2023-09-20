@@ -790,4 +790,13 @@ public Boolean isKeyAccount(Account a) {
 }
 
 
-52.
+52. Escalate Case
+Use case: In-progress cases dealing with mechanical or electrical breakdown need to be escalated. Implement a method escalateIfMeetsCriteria that takes as input a Case record, and sets the IsEscalated field to true if Type is Mechanical or Electrical, Reason is Breakdown, and Status is In Progress
+
+public void escalateIfMeetsCriteria(Case c) {
+    if((c.Type == 'Mechanical' || c.Type == 'Electrical') && c.Reason == 'Breakdown' && c.Status == 'In Progress'){
+        c.isEscalated = true;
+    }
+}
+
+
