@@ -767,5 +767,11 @@ public Boolean isBirthday(Contact c) {
 }
 
 
-51. 
+51. Key Account
+Use case: For this problem, we define minimum annual revenue thresholds an account must meet to be considered a key account. The annual revenue thresholds are defined by industry:
+	  Banking: 600,000
+	  Technology: 800,000
+	  Retail: 2,000,000
+	  All others: 500,000
+	  Implement the method isKeyAccount that takes as input an Account with the AnnualRevenue field and the Industry picklist fields filled out, returns true if the account is a key account, and returns false otherwise.
 
