@@ -973,7 +973,17 @@ public Integer maxConsecutiveOnes(Integer[] numbers) {
 63. Insert at Beginning
 Use case: Implement a method that would take an element and a List of elements as arguments and return the same List with the element inserted at the 0th position.
 
+public void insertAtStart(String cityName, List<String> cities) {
+    cities.add(null);
+    
+    for (Integer i = cities.size() - 2; i >= 0; i--) {
+        cities[i + 1] = cities[i];
+    }
+    cities[0] = cityName;
+}
 
+
+64. 
 
 
 
