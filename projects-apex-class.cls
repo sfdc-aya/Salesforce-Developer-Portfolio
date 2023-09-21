@@ -1095,4 +1095,19 @@ Use case: Given an list of Integers numbers, return the second largest integer i
 	  Note: While not necessary to solving this problem, it may be be helpful to know the smallest possible Integer: -2,147,483,648. However, you cannot set an integer directly to this value because of a bug in Apex, but you can do the following:
 	  Integer num = -2147483647 - 1;
 
+public Integer secondLargest(List<Integer> numbers) {
+    Integer largest = Integer.MIN_VALUE;
+    Integer secondLargest = Integer.MIN_VALUE;
+
+    for (Integer num : numbers) {
+        if (num > largest) {
+            secondLargest = largest;
+            largest = num;
+        } else if (num > secondLargest && num != largest) {
+            secondLargest = num;
+        }
+    }
+
+    return secondLargest;
+}
 
