@@ -1054,7 +1054,7 @@ public List<Integer> fibonacciSeries(Integer n) {
 Use case: Some Salesforce orgs (Trailhead playground orgs, for example) are given random names that include a combination of an adjective and an animal as a prefix. For instance, cunning-impala, curious-raccoon, and brave-hawk are possible prefixes for names for such orgs.
           Implement the method generateOrgNames that takes as input two lists of strings adjectives and animals, and returns a list of strings containing all org name prefixes that can be formed by combining the adjectives and animals. Assume that the input lists will never be empty
 
-public List<String> generateOrgNames(List<String> adjectives, List<String> animals) {
+public List<String> orgNames(List<String> adjectives, List<String> animals) {
     List<String> orgNames = new List<String>();
     
     for (String adjective : adjectives) {
