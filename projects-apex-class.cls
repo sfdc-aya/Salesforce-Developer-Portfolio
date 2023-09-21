@@ -1073,6 +1073,21 @@ Use case: A list is considered to be sorted ascending when no element in the lis
 	  Implement the method isSorted that takes as input a list of integers numbers, returns true if the list is sorted in any direction (acsending or descending), and returns false otherwise.
           Example: isSorted(new List<Integer> {5, 2, 0, -1}) evaluates to true because the input list is sorted descending.
 
+public boolean isSorted(List<Integer> numbers) {
+    Boolean ascending = true;
+    Boolean descending = true;
+
+    for (Integer i = 1; i < numbers.size(); i++) {
+        if (numbers[i] > numbers[i - 1]) {
+            descending = false;
+        } else if (numbers[i] < numbers[i - 1]) {
+            ascending = false;
+        }
+    }
+
+    return ascending || descending;
+}
+
 
 69. Second Largest Element
 Use case: Given an list of Integers numbers, return the second largest integer in the list. Assume that the input list will always contain at least two distinct integers.
