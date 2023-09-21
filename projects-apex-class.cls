@@ -995,8 +995,76 @@ public List<String> fullNames(List<String> firstNames, List<String> lastNames) {
 }
 
 
-65.
+65. Companion Plants 2
+Use case: Some plants are considered companion plants. They grow better when planted next to each other. For the purpose of this problem, we consider the following plants to be companions: lettuce and cucumbers, lettuce and onions, onions and carrots, and onions and tomatoes. The same plants planted next to each other are not considered companions.
+
+public Boolean companionPlants(List<String> plants) {
+    if (plants.size() == 0) return true;
+    if (plants.size() == 1) return false;
+    
+    for (Integer i=0; i<plants.size() - 1; i++) {  
+        if (!companions(plants[i], plants[i+1])) 
+            return false;
+        }
+            return true;
+}
+
+public Boolean companions(String plant1, String plant2) {
+    if (plant1 == 'onions' && (plant2 == 'lettuce' || plant2 == 'carrots' || plant2 == 'tomatoes'))
+        return true;
+    else if (plant1 == 'lettuce' && (plant2 == 'cucumbers' || plant2 == 'onions'))
+        return true;
+    else if (plant1 == 'cucumbers' && plant2 == 'lettuce')
+        return true;
+    else if (plant1 == 'carrots' && plant2 == 'onions')
+        return true;
+    else if (plant1 == 'tomatoes' && plant2 == 'onions')
+        return true;
+    else return false;
+}
 
 
+66. Fibonacci Series
+Use case: The first two numbers in the fibonacci sequence are 1, and all other numbers in the sequence are defined as the sum of the two preceding fibonacci numbers. The first 10 numbers in the fibonacci sequence are 1, 1, 2, 3, 5, 8, 13, 21, 34, and 55.
+	  Given a non-zero positive integer n, return a list of integers of size n containing (in correct order) the first n numbers in the fibonacci series.
+          Example: fibonacciSeries(5) returns a list containing the numbers 1, 1, 2, 3, and 5.
+
+public List<Integer> fibonacciSeries(Integer n) {
+  List<Integer> result = new List<Integer>();
+
+    // Handle the base case when n is 1 or 2
+    if (n >= 1) {
+        result.add(1);
+    }
+    if (n >= 2) {
+        result.add(1);
+    }
+
+    // Generate the Fibonacci series for n > 2
+    for (Integer i = 2; i < n; i++) {
+        int nextFibonacci = result[i - 1] + result[i - 2];
+        result.add(nextFibonacci);
+    }
+
+    return result;
+}
+
+
+67. Org Names
+Use case: Some Salesforce orgs (Trailhead playground orgs, for example) are given random names that include a combination of an adjective and an animal as a prefix. For instance, cunning-impala, curious-raccoon, and brave-hawk are possible prefixes for names for such orgs.
+          Implement the method generateOrgNames that takes as input two lists of strings adjectives and animals, and returns a list of strings containing all org name prefixes that can be formed by combining the adjectives and animals. Assume that the input lists will never be empty
+
+
+68. Sorted List
+Use case: A list is considered to be sorted ascending when no element in the list is smaller than the preceding element if one is present. Similarly, a list is considered sorted descending if no element in the list is larger than the preceding element if any.
+	  Implement the method isSorted that takes as input a list of integers numbers, returns true if the list is sorted in any direction (acsending or descending), and returns false otherwise.
+          Example: isSorted(new List<Integer> {5, 2, 0, -1}) evaluates to true because the input list is sorted descending.
+
+
+69. Second Largest Element
+Use case: Given an list of Integers numbers, return the second largest integer in the list. Assume that the input list will always contain at least two distinct integers.
+	  Example: secondLargest(new List {5, 2, 8, 4, 8, 1}) evaluates to 5 because 5 is the second largest Integer in the array, with 8 being the largest integer.
+	  Note: While not necessary to solving this problem, it may be be helpful to know the smallest possible Integer: -2,147,483,648. However, you cannot set an integer directly to this value because of a bug in Apex, but you can do the following:
+	  Integer num = -2147483647 - 1;
 
 
