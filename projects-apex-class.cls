@@ -8,7 +8,7 @@ public Boolean isTeenager(Integer age) {
         return false;
     }
 }
-
+  
  
 2. Number Difference
 Use case: Implement a function diff that calculates the absolute difference between two integers.
@@ -1096,18 +1096,44 @@ Use case: Given an list of Integers numbers, return the second largest integer i
 	  Integer num = -2147483647 - 1;
 
 public Integer secondLargest(List<Integer> numbers) {
-    Integer largest = Integer.MIN_VALUE;
-    Integer secondLargest = Integer.MIN_VALUE;
+     numbers.sort();    
+     for(Integer i = numbers.size()-1; i>=0;i--){        
+         if(numbers[i] != numbers[numbers.size()-1]){            
+             return numbers[i];        
+         }    
+     }    
+     return null;
+}
 
-    for (Integer num : numbers) {
-        if (num > largest) {
-            secondLargest = largest;
-            largest = num;
-        } else if (num > secondLargest && num != largest) {
-            secondLargest = num;
-        }
+
+70. Union
+Use case: A union between two sets A and B is a set that contains all elements from A and B. For example, the unions of sets {1, 5, 10} and {1, 3, 5} is {1, 3, 5, 10}.
+	  Implement the method setUnion that takes as input two sets of integers set1 and set2 and returns the union of the two sets. The method should not modify the original sets.
+	  Given the following test code:
+	  Set<Integer> set1 = new Set<Integer> {1, 2};
+	  Set<Integer> set2 = new Set<Integer> {4, 5};
+	  Set<Integer> set3 = setUnion(set1, set2);
+	  The set set3 contains the numbers 1, 2, 4, and 5.
+
+public Set<Integer> setUnion(Set<Integer> set1, Set<Integer> set2) {
+    Set<Integer> set3 = new Set<Integer>();
+    
+    for(Integer i : set1){
+        set3.add(i);
+    }
+    
+    for(Integer i : set2){
+        set3.add(i);
     }
 
-    return secondLargest;
+    return set3;
 }
+
+
+
+
+
+
+
+
 
