@@ -1153,7 +1153,20 @@ public Set<Integer> setIntersection(Set<Integer> set1, Set<Integer> set2) {
 }
 
 
-72.
+72. 
+
+public Set<Id> accountIds(List<Opportunity> opps) {
+    Set<ID> accountId = new Set<ID>();
+
+    if(opps.size()>0){
+        for(Opportunity o : opps){
+            if(o.AccountId != null){
+                accountId.add(o.AccountId);
+            }
+        }
+    }
+    return accountId;
+}
 
 
 
