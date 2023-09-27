@@ -1140,7 +1140,20 @@ Use case: An intersection between two sets A and B is a set that contains all el
 	  Set<Integer> set3 = setUnion(set1, set2);
 	  The set set3 contains the numbers 2 and 3.
 
+public Set<Integer> setIntersection(Set<Integer> set1, Set<Integer> set2) {
+    Set<Integer> finalSet = new Set<Integer>();
 
+    for(Integer i : set1){
+        if(set2.contains(i)){
+            finalSet.add(i);
+        }
+    }
+
+    return finalSet;
+}
+
+
+72.
 
 
 
