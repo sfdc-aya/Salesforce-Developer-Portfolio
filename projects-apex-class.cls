@@ -1246,4 +1246,18 @@ public Map<String, String> phonebook(List<Contact> contacts) {
 }
 
 
+77. 
+
+public Map<String, Account> phoneToAccount(List<Account> accounts) {
+    Map<String, Account> acMap = new Map<String, Account>();
+    for (Account a: accounts) {
+        if (a.Phone != null) {
+            acMap.put(a.Phone, a);
+        }
+
+    }
+    return acMap;
+}
+
+
 
