@@ -1182,7 +1182,16 @@ Use case: Implement the method sameElements that takes as input two lists of int
 	  sameElements(new List {5, 7}, new List {7, 5, 5}) evaluates to true
 	  sameElements(new List {5, 7}, new List {7, 5, 9}) evaluates to false
 
+public Boolean sameElements(List<Integer> nums1, List<Integer> nums2) {
 
+    Set<Integer> set1 = new Set<Integer>(nums1);
+    Set<Integer> set2 = new Set<Integer>(nums2);
+
+    return set1.equals(set2);
+}
+
+
+74
 
 
 
