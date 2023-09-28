@@ -1210,6 +1210,16 @@ Use case: Given a string employeeId a map of string to string employeeIdToEmail 
 	  '4823' -> 'alicia@acmeenterprises.com'
 	  The method call employeeEmail(employeeIdToEmail, '4823') should return 'alicia@acmeenterprises.com'.
 
+public String employeeEmail(Map<String, String> employeeIdToEmail, String employeeId) {
+   
+      if(employeeIdToEmail.containsKey(employeeId)){
+          return employeeIdToEmail.get(employeeId);
+      }else{
+          return 'info@apexsandbox.io';
+      }
+}
+
+
 
 
 
