@@ -1292,4 +1292,15 @@ Use case: The method industrySummary takes as input a list of accounts with Indu
 	 'Retail' -> 200,000
 	 'Banking' -> 1,000,000
 
+public Map<String, Decimal> industrySummary(List<Account> accounts) {
+   Map<String, Decimal> mappedIndustry = new Map<String, Decimal>();
 
+       for(Account a : accounts){
+           if(mappedIndustry.containsKey(a.Industry)){
+               mappedIndustry.put(a.Industry, mappedIndustry.get(a.Industry) + a.AnnualRevenue);
+           }else{
+               mappedIndustry.put(a.Industry, a.AnnualRevenue);
+           }
+       }
+       return mappedIndustry;
+}
