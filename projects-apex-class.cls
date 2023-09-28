@@ -1191,7 +1191,11 @@ public Boolean sameElements(List<Integer> nums1, List<Integer> nums2) {
 }
 
 
-74
+74. Duplicate Integers
+Use case: Implement the method containsDuplicates that takes as input a list of integers, returns true if the list has more than one occurence of the same number, and returns false if every element in the list is unique.
+	  Examples:
+	  containsDuplicates(new List {5, 50, 500, 1000}) evaluates to false
+	  containsDuplicates(new List {5, 50, 500, 50}) evaluates to true
 
 
 
