@@ -413,5 +413,6 @@ public class QueueAbleApex implements Queueable {
 }
 
 
-10. 
+10. Send Email Notifications with Future Method
+Use case: Create a trigger that fires when a custom object is updated and sends email notifications to related contacts asynchronously using a future method.
 
