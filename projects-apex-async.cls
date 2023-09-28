@@ -399,3 +399,7 @@ public class TestBatchOwnerUpdate {
 }
 
 
+9. Implement a Queueable Apex to Update Records
+Use case: You need to implement a Queueable Apex class that updates all Account records with a specific field value when a trigger on a related object fires.
+
+
