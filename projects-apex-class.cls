@@ -1234,8 +1234,16 @@ Use case: Implement the method phonebook that takes as input a list of Contacts,
 	  'Bryan McCartney' -> '2143452398'
 	  'Janice Gonzalez' -> '6923849837'
 
+public Map<String, String> phonebook(List<Contact> contacts) {
+    Map<String, String> conMap = new Map<String, String>();
 
-
+    for(Contact c : contacts){
+        if(c.Phone != null && c.Name != null){
+            conMap.put(c.Name, c.Phone);
+        }
+    }
+    return conMap;
+}
 
 
 
