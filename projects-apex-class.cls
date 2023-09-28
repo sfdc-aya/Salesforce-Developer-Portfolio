@@ -1325,19 +1325,16 @@ Use case: The method casesByType takes as input a list of cases and returns a Ma
 
 public Map<String, List<Case>> casesByType(List<Case> cases) {
     Map<String, List<Case>> result = new Map<String, List<Case>>();
-    // Iterate through the list of cases
+    
     for (Case c : cases) {
-        // Check if the case has a valid Type specified
-        if (c.Type != null && !c.Type.isEmpty()) {
-            // If the Type is already a key in the result map, add the case to the existing list
+        if (c.Type != null) {
             if (result.containsKey(c.Type)) {
                 result.get(c.Type).add(c);
-            } else {
-                // If the Type is encountered for the first time, create a new list and add the case
-                result.put(c.Type, new List<Case>{c});
+            }
+            else {
+                result.put(c.Type, new List<Case> { c });
             }
         }
     }
-
     return result;
 }
