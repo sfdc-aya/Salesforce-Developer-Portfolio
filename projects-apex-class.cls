@@ -1341,5 +1341,28 @@ public Map<String, List<Case>> casesByType(List<Case> cases) {
 
 
 80. Fibonacci Series
-Use case: 
- 
+Use case: The first two numbers in the fibonacci sequence are 1, and all other numbers in the sequence are defined as the sum of the two preceding fibonacci numbers. The first 10 numbers in the fibonacci sequence are 1, 1, 2, 3, 5, 8, 13, 21, 34, and 55.
+	  Given a non-zero positive integer n, return a list of integers of size n containing (in correct order) the first n numbers in the fibonacci series.
+	  Example: fibonacciSeries(5) returns a list containing the numbers 1, 1, 2, 3, and 5.
+
+public List<Integer> fibonacciSeries(Integer n) {
+    //code here
+    list<Integer> f = new list<Integer>();
+    Integer n1=0;
+    Integer n2=1;
+    Integer n3=1;
+
+    for(Integer i=1;i<=n;i++){
+        if(i==1){ 
+            f.add(1);
+        }
+        else{
+            n3 = n1 + n2;
+            n1 = n2;
+            n2 = n3;
+            f.add(n3);
+        }
+    }
+    return f;
+}
+
