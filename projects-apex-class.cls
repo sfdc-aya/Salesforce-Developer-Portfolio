@@ -1304,3 +1304,40 @@ public Map<String, Decimal> industrySummary(List<Account> accounts) {
        }
        return mappedIndustry;
 }
+
+
+79. Cases by Type
+Use case: The method casesByType takes as input a list of cases and returns a Map> with case types (Type field on Case) as the keys, and a list of cases of that type as values. This map should not include cases with no Type specified.
+	  For example, given the following cases:
+	c1
+	Subject: 'Power does not come on'
+	Type: 'Electrical'
+	c2
+	Subject: 'Several switches not responding'
+	Type: 'Electrical'
+	c3
+	Subject: 'Lever jammed - cannot run machine'
+	Type: 'Structural'
+	The method call casesByType(new List {c1, c2, c3}) should return a map containing the following key/value pairs:
+	
+	'Electrical' -> { c1, c2 }
+	'Structural' -> { c3 }
+
+public Map<String, List<Case>> casesByType(List<Case> cases) {
+    Map<String, List<Case>> result = new Map<String, List<Case>>();
+    // Iterate through the list of cases
+    for (Case c : cases) {
+        // Check if the case has a valid Type specified
+        if (c.Type != null && !c.Type.isEmpty()) {
+            // If the Type is already a key in the result map, add the case to the existing list
+            if (result.containsKey(c.Type)) {
+                result.get(c.Type).add(c);
+            } else {
+                // If the Type is encountered for the first time, create a new list and add the case
+                result.put(c.Type, new List<Case>{c});
+            }
+        }
+    }
+
+    return result;
+}
