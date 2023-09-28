@@ -1197,7 +1197,12 @@ Use case: Implement the method containsDuplicates that takes as input a list of 
 	  containsDuplicates(new List {5, 50, 500, 1000}) evaluates to false
 	  containsDuplicates(new List {5, 50, 500, 50}) evaluates to true
 
+public Boolean containsDuplicates(List<Integer> nums) {
+   return new Set<Integer>(nums).size() != nums.size();
+}
 
+
+75
 
 
 
