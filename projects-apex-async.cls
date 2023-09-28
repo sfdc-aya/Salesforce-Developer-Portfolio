@@ -416,3 +416,26 @@ public class QueueAbleApex implements Queueable {
 10. Send Email Notifications with Future Method
 Use case: Create a trigger that fires when a custom object is updated and sends email notifications to related contacts asynchronously using a future method.
 
+trigger CustomObjectTrigger on CustomObject__c (after update) {
+    List<Contact> contactsToSendEmail = [SELECT Id, Email FROM Contact WHERE CustomObject__c = :Trigger.new];
+    
+    for (Contact con : contactsToSendEmail) {
+        // Prepare email content
+        String emailContent = 'Your message here';
+        
+        // Send email asynchronously using a future method
+        EmailSender.sendEmailAsync(con.Email, 'Subject', emailContent);
+    }
+}
+
+public class EmailSender {
+    @future
+    public static void sendEmailAsync(String recipient, String subject, String body) {
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        mail.setToAddresses(new String[]{recipient});
+        mail.setSubject(subject);
+        mail.setPlainTextBody(body);
+        Messaging.sendEmail(new Messaging.SingleEmailMessage[]{mail});
+    }
+}
+
