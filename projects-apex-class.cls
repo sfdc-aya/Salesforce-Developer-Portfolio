@@ -1335,6 +1335,11 @@ public Map<String, List<Case>> casesByType(List<Case> cases) {
                 result.put(c.Type, new List<Case> { c });
             }
         }
-    }
+   }
     return result;
 }
+
+
+80. Fibonacci Series
+Use case: 
+ 
