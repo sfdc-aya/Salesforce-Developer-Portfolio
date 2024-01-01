@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Weather Tracker">
+        <div class="slds-p-around_medium">
+            <lightning-input label="City Name" value={cityName} onchange={handleCityChange}></lightning-input>
+            <lightning-button label="Get Weather" onclick={getWeather}></lightning-button>
+        </div>
+        <div if:true={weatherInfo}>
+            <p>{weatherInfo.cityName} Weather:</p>
+            <p>Temperature: {weatherInfo.temperature}</p>
+            <p>Condition: {weatherInfo.condition}</p>
+        </div>
+    </lightning-card>
+</template>

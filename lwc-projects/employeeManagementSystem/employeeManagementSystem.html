@@ -1,0 +1,20 @@
+<template>
+    <lightning-card title="Employee Management System">
+        <div class="slds-m-around_medium">
+            <lightning-button label="New Employee" onclick={openCreateModal}></lightning-button>
+        </div>
+        <lightning-datatable
+            key-field="Id"
+            data={employees}
+            columns={columns}
+            onrowaction={handleRowAction}
+        ></lightning-datatable>
+        <lightning-record-form
+            object-api-name="Employee__c"
+            fields={fields}
+            onsuccess={handleSuccess}
+            oncancel={handleCancel}
+            if:true={showCreateModal}
+        ></lightning-record-form>
+    </lightning-card>
+</template>

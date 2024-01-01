@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Employee List">
+        <!-- Display employee records here -->
+        <template for:each={employees} for:item="employee">
+            <c-employee-tile key={employee.Id} employee={employee} onviewdetails={handleViewDetails}></c-employee-tile>
+        </template>
+        <!-- Pagination controls -->
+        <c-pagination onpaginate={handlePagination} page={currentPage} total-records={totalRecords}></c-pagination>
+    </lightning-card>
+</template>
