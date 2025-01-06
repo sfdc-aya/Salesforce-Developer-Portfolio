@@ -22,7 +22,20 @@ Postman side:
       Password: <passwordSecurityToken>
 
 -Send Request: 
-      Status Code 200Ok, AccessToken, InstanceURl is received back.
+      Status Code 200 Ok, AccessToken, InstanceURl is received back.
 
 
 2. Create a REST API endpoint to retrieve Account records, returning names and phone numbers.
+
+Solution: 
+Based on the request above, I received the Access token, and InstanceUrl that I was able to use to complete the second challenge.
+
+Postman side:
+-Method: Get
+-Endpoint: <InstanceUrl>/services/data/v52.0/sobjects/Account/<AccountId>
+-Body: none
+
+-Send Request: 
+      Status Code 200 Ok, received details on the Account record passed.
+
+
