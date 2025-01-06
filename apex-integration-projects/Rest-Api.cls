@@ -77,7 +77,6 @@ Postman side:
 
 @RestResource(urlMapping='/opportunity/*')
 global with sharing class OpportunityApi {
-    
     @HttpGet
     global static Opportunity getOpportunity(){
         RestRequest req = RestContext.request;
