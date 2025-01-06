@@ -1,1 +1,28 @@
-1. Create a REST API endpoint to retrieve Account records, returning names and phone numbers.
+1. Challenge: Rest Api Authentication through Postman.
+
+Solution: 
+
+Sfdc side:
+-I created a Connected App under App Manager
+-Gave it a Name, Provided email address, Enabled OAuth Setting (under API), Callback URL: https://localhost, Selected Full access, and Perform requests at any time(refresh token, offline_access) under Selected OAuth Scopes
+-Once saved, it generated a new Consumer Key and Consumer Secret
+
+Postman side:
+-Created a RestAPI Collection, then added a request for RestAPI Authentication
+-Method: Post
+-Endpoint: https://login.salesforce.com/services/oauth2/token
+-Headers: 
+      Authorization: Bearer <Security_Token>
+      Content-Type: application/x-www-form-urlencoded
+-Body:
+      Grant_Type: password
+      Client_Id
+      Client_Secret
+      Username
+      Password: <passwordSecurityToken>
+
+-Send Request: 
+      Status Code 200Ok, AccessToken, InstanceURl is received back.
+
+
+2. Create a REST API endpoint to retrieve Account records, returning names and phone numbers.
