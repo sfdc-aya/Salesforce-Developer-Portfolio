@@ -75,7 +75,7 @@ Postman side:
    ContentType: application/json
 
 
-@RestResource(urlMapping='/opportunity/*')
+@RestResource(urlMapping='/opportunity/')
 global with sharing class OpportunityApi {
     @HttpGet
     global static Opportunity getOpportunity(){
