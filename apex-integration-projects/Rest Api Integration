@@ -37,7 +37,7 @@ Postman side:
       Status Code 200 Ok, received details on the Account record passed.
 
 
-3. Apex REST Endpoint
+3. Apex REST Endpoint to get the specific Contact
 Solution:
 
 Sfdc side:
@@ -61,4 +61,23 @@ Postman side:
    ContentType: application/json
 
 
-4.
+4. Apex REST Endpoint to get the specific Opportunity
+Solution:
+
+Sfdc side:
+-Create Apex RestResource Annotated class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
