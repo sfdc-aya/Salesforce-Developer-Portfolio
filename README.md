@@ -15,6 +15,7 @@ apex-class-projects: Dive into the world of custom Apex classes that I've built 
 async-apex-projects: Explore examples of asynchronous Apex code that I've created to handle time-consuming tasks efficiently, such as batch, scheduler, queueable processing, and future methods.
 apex-triggers-projects: I've crafted Apex triggers to automate various processes within Salesforce. Each trigger comes with documentation explaining its purpose, functionality, and deployment instructions.
 apex-integration-projects: Explore examples of inbound and outbound integration I've built to handle connections between external systems. 
+lwc-projects: UI and backend automation implemented using LWC.
 
 Project Documentation: I've provided detailed project documentation for each item, including usage guidelines and explanations of how they address real-world business challenges.
 
