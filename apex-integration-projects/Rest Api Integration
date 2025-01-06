@@ -1,5 +1,4 @@
 1. Challenge: Rest Api Authentication through Postman.
-
 Solution: 
 
 Sfdc side:
@@ -22,13 +21,12 @@ Postman side:
       Password: <passwordSecurityToken>
 
 -Send Request: 
-      Status Code 200 Ok, AccessToken, InstanceURl is received back.
+      Status Code 200 Ok, AccessToken, instanceUrl is received back.
 
 
 2. Create a REST API endpoint to retrieve Account records, returning names and phone numbers.
-
 Solution: 
-Based on the request above, I received the Access token, and InstanceUrl that I was able to use to complete the second challenge.
+Based on the request above, I received the Access token, and instanceUrl that I was able to use to complete the second challenge.
 
 Postman side:
 -Method: Get
@@ -39,3 +37,28 @@ Postman side:
       Status Code 200 Ok, received details on the Account record passed.
 
 
+3. Apex REST Endpoint
+Solution:
+
+Sfdc side:
+-Create Apex RestResource Annotated class
+
+@RestResource(urlMapping='/contact/')
+global with sharing class ContactAPi {
+    @HttpGet
+    global static Contact getContact() {
+        RestRequest req = RestContext.request;
+        String contactId = req.requestURI.substring(req.requestURI.lastIndexOf('/')+1);
+        return [SELECT Id, Name, Email FROM Contact WHERE Id = :contactId LIMIT 1];
+    }
+}
+
+Postman side:
+-Method: Get
+-Endpoint: <instanceUrl>/services/apexrest/contact/<ContactID>
+-Headers: 
+   Authorization: Bearer <SecurityToken>
+   ContentType: application/json
+
+
+4.
