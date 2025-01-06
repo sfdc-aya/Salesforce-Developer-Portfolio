@@ -67,11 +67,27 @@ Solution:
 Sfdc side:
 -Create Apex RestResource Annotated class
 
+Postman side:
+-Method: Get
+-Endpoint: <instanceUrl>/services/apexrest/contact/<ContactID>
+-Headers: 
+   Authorization: Bearer <SecurityToken>
+   ContentType: application/json
 
 
+@RestResource(urlMapping='/opportunity/*')
+global with sharing class OpportunityApi {
+    
+    @HttpGet
+    global static Opportunity getOpportunity(){
+        RestRequest req = RestContext.request;
+        String oppId = req.requestURI.substring(req.requestURI.lastIndexOf('/')+1);
+        return [SELECT Id, Name, Amount, StageName, CloseDate, OwnerId, Type, LeadSource FROM Opportunity WHERE Id =:oppId LIMIT 1];
+    }
+}
 
 
-
+5.
 
 
 
