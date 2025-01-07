@@ -131,8 +131,41 @@ public class JokeAPIService{
 }
 
 
+6. Call a Public API from Salesforce using Rest API Callouts to generate city weather.
+Solution: 
 
+Sfdc side:
+-Created Remote Site Setting, and included the Name and Remote Site URL
+-Then Created an Apex Rest API Callout to call the public API to fetch city weather.
+-Then Called this class and method name, and passed the specific city, using Anonymous Window in Dev Console.
 
+Note: Api key and URL endpoint can be found on the account of the public API website.
+
+public class WeatherAPIService{
+ public static void getWeatherForCity(String city){
+        try{
+            Http http = new Http();
+            HttpRequest req = new HttpRequest();
+            String apiKey = 'ef3df01b00021fae86fda6a2074a9f40';
+            String endPoint = 'http://api.openweathermap.org/data/2.5/forecast?q='
+                + city 
+                + '&appid='+ apiKey;
+            
+            req.setEndpoint(endpoint);
+            req.setMethod('GET');
+            HttpResponse res = http.send(req);
+            
+            if(res.getStatusCode()==200){
+            System.debug('Weather API Response'+ res.getBody());
+            }else{
+              System.debug('Error: HTTP Status Code' + res.getStatusCode());
+            }
+        }catch(Exception e){
+             System.debug('Exception:'+e.getMessage());
+        }
+ }
+
+}
 
 
 
