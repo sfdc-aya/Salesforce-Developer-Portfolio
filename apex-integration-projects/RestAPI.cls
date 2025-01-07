@@ -86,8 +86,11 @@ global with sharing class OpportunityApi {
 }
 
 
-5.Call a Public API from Salesforce using Rest API Callouts to generate random jokes.
+5. Call a Public API from Salesforce using Rest API Callouts to generate random jokes.
 Solution: 
+What did the fish say when it hit the wall?
+Dam.
+
 
 Sfdc side:
 -Created Remote Site Setting, and included the Name and Remote Site URL
