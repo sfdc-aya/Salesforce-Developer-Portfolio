@@ -86,7 +86,48 @@ global with sharing class OpportunityApi {
 }
 
 
-5.
+5.Call a Public API from Salesforce using Rest API Callouts to generate random jokes.
+Solution: 
+
+Sfdc side:
+-Created Remote Site Setting, and included the Name and Remote Site URL
+-Then Created an Apex Rest API Callout to call the public API to fetch random jokes.
+-Then Called this class and method name using Anonymous Window in Dev Console.
+
+Note: Api key and URL endpoint can be found on the account of the public API website.
+
+public class JokeAPIService{
+ public static void fetchRandomJoke(){
+        try{
+            Http http = new Http();
+            HttpRequest request = new HttpRequest();
+           // String apiKey = 'ef3df01b00021fae86fda6a2074a9f40';
+            String endPoint = 'https://official-joke-api.appspot.com/random_joke';
+            
+            request.setEndpoint(endpoint);
+            request.setMethod('GET');
+            HttpResponse response = http.send(request);
+            
+            if(response.getStatusCode()==200){
+            Map<String, Object> jsonResponse = (Map<String, Object>) Json.deserializeUntyped(response.getBody());
+            //System.debug('Weather API Response'+ response.getBody());
+            
+            String setup =(String)jsonResponse.get('setup');
+            String punchLine=(String)jsonResponse.get('punchline');
+            System.debug('Here is a joke for you: ');
+            System.debug('Setup: '+ setup);
+            System.debug('PunchLine: '+punchLine);
+            
+            }else{
+              System.debug('Error: HTTP Status Code' + response.getStatusCode());
+            }
+        }catch(Exception e){
+             System.debug('Exception:'+e.getMessage());
+        }
+     }
+}
+
+
 
 
 
