@@ -127,7 +127,7 @@ public class JokeAPIService{
         }catch(Exception e){
              System.debug('Exception:'+e.getMessage());
         }
-     }
+    }
 }
 
 
@@ -163,11 +163,11 @@ public class WeatherAPIService{
         }catch(Exception e){
              System.debug('Exception:'+e.getMessage());
         }
- }
-
+    }
 }
 
 
+7. Create an Apex REST class that handles GET and POST requests to retrieve and create Account records.
 
 
 
