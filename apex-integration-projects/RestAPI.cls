@@ -167,7 +167,109 @@ public class WeatherAPIService{
 }
 
 
-7. Create an Apex REST class that handles GET and POST requests to retrieve and create Account records.
+7.Convert A GET Callout into Queueable Apex
+
+Why Use Queueable Apex for Callouts?
+
+1. Asynchronous Execution: Processes heavy workloads or time-intensive operations outside of synchronous execution.
+2. Supports Callouts: Queueable Apex supports making HTTP callouts.
+3. Chaining Jobs: You can chain another queueable job from within a queueable.
+
+Steps to Implement
+1. Create a Queueable Class
+Define a class implementing the Queueable interface and make your GET callout inside it.
+
+public class MyQueueableCallout implements Queueable, Database.AllowsCallouts {
+    // Class variables (e.g., endpoint URL or parameters)
+    private String endpointUrl;
+
+    // Constructor to pass data
+    public MyQueueableCallout(String endpointUrl) {
+        this.endpointUrl = endpointUrl;
+    }
+
+    // Execute method
+    public void execute(QueueableContext context) {
+        // Create an HTTP request
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(endpointUrl);
+        request.setMethod('GET');
+
+        try {
+            // Make the callout
+            HttpResponse response = http.send(request);
+
+            if (response.getStatusCode() == 200) {
+                // Process the response
+                System.debug('Response: ' + response.getBody());
+                // Add your logic to process the response (e.g., update records)
+            } else {
+                System.debug('Error: ' + response.getStatus());
+            }
+        } catch (Exception e) {
+            System.debug('Callout error: ' + e.getMessage());
+        }
+    }
+}
+
+2. Enqueue the Job
+Enqueue the job by instantiating the Queueable class and calling System.enqueueJob.
+
+String endpointUrl = 'https://api.example.com/data';
+System.enqueueJob(new MyQueueableCallout(endpointUrl));
+
+3. Optional: Chaining Jobs
+If you need to run another job after the first, use the System.enqueueJob method within the execute method of the first job.
+
+public void execute(QueueableContext context) {
+    // Perform the callout logic...
+
+    // Chain another job
+    System.enqueueJob(new AnotherQueueableClass());
+}
+
+4. Testing the Queueable Callout
+To test the callout in a test class, use the Test.setMock method to simulate the HTTP response.
+
+@IsTest
+private class MyQueueableCalloutTest {
+    @IsTest
+    static void testCallout() {
+        // Mock HTTP response
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
+
+        // Enqueue the job
+        Test.startTest();
+        String endpointUrl = 'https://api.example.com/data';
+        System.enqueueJob(new MyQueueableCallout(endpointUrl));
+        Test.stopTest();
+
+        // Add assertions to verify behavior
+    }
+}
+
+// Mock HTTP response
+public class MockHttpResponseGenerator implements HttpCalloutMock {
+    public HttpResponse respond(HttpRequest request) {
+        HttpResponse response = new HttpResponse();
+        response.setStatusCode(200);
+        response.setBody('{"key": "value"}');
+        return response;
+    }
+}
+Key Points
+
+• Implements Database.AllowsCallouts: Required for making callouts in a Queueable Apex.
+• Governor Limits: Each queueable job runs in its own execution context, so the governor limits are reset.
+• Chaining Limits: You can chain up to 50 jobs in a single transaction.
+
+
+
+
+
+
+10. Create an Apex REST class that handles GET and POST requests to retrieve and create Account records.
 
 
 
