@@ -10,3 +10,59 @@ Bonus:
 
 Add a dropdown menu in your LWC to select different cities or categories.
 Handle errors gracefully (e.g., show an error message if the API call fails).
+
+Steps to accomplish above:
+Created Remote Site settings in Salesforce to add the URL of the OpenWeatherMap public API: https://api.openweathermap.org
+Went into their website, sign in to get my API key
+Created an Object
+An App
+added custom fields
+created an Apex class
+public class WeatherService {
+
+    private static final String WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather';
+    private static final String API_KEY = 'ef3df01b00021fae86fda6a2074a9f40'; // Replace with your actual API key
+
+    @AuraEnabled(cacheable=true)
+    public static Weather_Data__c fetchWeather(String city) {
+        if (String.isEmpty(city)) {
+            throw new AuraHandledException('City name cannot be empty.');
+        }
+
+        String apiUrl = WEATHER_API_URL + '?q=' + EncodingUtil.urlEncode(city, 'UTF-8') + '&appid=' + API_KEY + '&units=metric';
+        
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(apiUrl);
+        req.setMethod('GET');
+        
+        Http http = new Http();
+        HttpResponse res = http.send(req);
+
+        if (res.getStatusCode() == 200) {
+            Map<String, Object> weatherResponse = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+            
+            Weather_Data__c weather = new Weather_Data__c();
+            weather.City__c = (String) weatherResponse.get('name');
+            
+           
+            Map<String, Object> main = (Map<String, Object>) weatherResponse.get('main');
+            if (main != null) {
+                weather.Temperature__c = (Decimal) main.get('temp');
+                weather.Min_Temp__c = (Decimal) main.get('temp_min');
+                weather.Max_Temp__c = (Decimal) main.get('temp_max');
+                weather.Feels_Like__c = (Decimal) main.get('feels_like');
+            }
+            return weather;
+        } else {
+            throw new AuraHandledException('Failed to fetch weather data.');
+        }
+    }
+}
+
+
+
+
+created an LWC components
+
+Created APEX Class to get the data, parse the JSON file 
+
