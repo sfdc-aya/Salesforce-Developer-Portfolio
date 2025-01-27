@@ -92,6 +92,37 @@ created an LWC HTML component
     </lightning-card>
 </template>
 
+Created LWC JS file
+
+import { LightningElement, track } from 'lwc';
+import fetchWeather from '@salesforce/apex/WeatherService.fetchWeather';
+
+export default class WeatherComponent extends LightningElement {
+    @track city = '';
+    @track weatherData = null;
+    @track error;
+
+    handleCityChange(event) {
+        this.city = event.target.value;
+    }
+
+    async fetchWeathers() {
+        this.error = null;
+        this.weatherData = null;
+
+        if (!this.city) {
+            this.error = 'Please enter a city name.';
+            return;
+        }
+
+        try {
+            const data = await fetchWeather({ city: this.city });
+            this.weatherData = data;
+        } catch (error) {
+            this.error = 'Failed to fetch weather data. Please try again.';
+        }
+    }
+}
 
 
 Created APEX Class to get the data, parse the JSON file 
