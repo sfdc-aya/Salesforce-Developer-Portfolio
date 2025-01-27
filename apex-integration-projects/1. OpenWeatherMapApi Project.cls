@@ -60,9 +60,39 @@ public class WeatherService {
 }
 
 
+created an LWC HTML component
+<template>
+    <lightning-card title="Weather Information" icon-name="utility:cloud" style="color: rgb(0, 106, 255);">
+        <div class="slds-p-horizontal_small">
+            <lightning-input
+                label="Enter City"
+                value={city}
+                onchange={handleCityChange}>
+            </lightning-input>
+            <lightning-button
+                label="Get Weather"
+                onclick={fetchWeathers}
+                class="slds-m-top_small">
+            </lightning-button>
+        </div>
+        <template if:true={weatherData}>
+            <div class="slds-m-top_medium">
+                <p class="slds-p-left_large"><strong>City:</strong> {weatherData.City__c}</p>
+                <p class="slds-p-left_large"><strong>Temperature:</strong> {weatherData.Temperature__c}°C</p>
+                <p class="slds-p-left_large"><strong>Feels Like:</strong> {weatherData.Feels_Like__c}°C</p>
+                <p class="slds-p-left_large"><strong>Min Temp:</strong> {weatherData.Min_Temp__c}°C</p>
+                <p class="slds-p-left_large"><strong>Max Temp:</strong> {weatherData.Max_Temp__c}°C</p>
+            </div>
+        </template>
+        <template if:true={error}>
+            <div class="slds-m-top_large slds-text-color_error">
+                <p>{error}</p>
+            </div>
+        </template>
+    </lightning-card>
+</template>
 
 
-created an LWC components
 
 Created APEX Class to get the data, parse the JSON file 
 
