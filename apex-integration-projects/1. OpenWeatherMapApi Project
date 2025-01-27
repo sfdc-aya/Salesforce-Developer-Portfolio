@@ -1,1 +1,12 @@
+1. Fetch Public API Data
+Objective: Learn how to call an external API, handle responses, and display data in Salesforce.
 
+Challenge:
+
+Use the OpenWeatherMap API (or another public API like Dog API or Cat Facts API).
+Fetch weather data for a specific city or random facts and store the response in a custom Salesforce object.
+Display the data in a Lightning Web Component (LWC).
+Bonus:
+
+Add a dropdown menu in your LWC to select different cities or categories.
+Handle errors gracefully (e.g., show an error message if the API call fails).
