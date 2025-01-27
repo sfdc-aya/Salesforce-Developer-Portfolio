@@ -134,5 +134,5 @@ LWC XML file
 
 
 
-Created APEX Class to get the data, parse the JSON file 
+
 
