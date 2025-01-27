@@ -1,0 +1,12 @@
+5. Asynchronous Callouts with Batch Apex
+Objective: Handle large data sets and asynchronous processing.
+
+Challenge:
+
+Integrate with the Currency Exchange Rates API (or another API that provides bulk data).
+Fetch exchange rates for multiple currencies and store them in a custom object.
+Use Batch Apex to process the API callout for a list of currencies.
+Bonus:
+
+Create a Scheduled Job to refresh the exchange rates daily.
+Build a report or dashboard in Salesforce showing the latest exchange rates.
