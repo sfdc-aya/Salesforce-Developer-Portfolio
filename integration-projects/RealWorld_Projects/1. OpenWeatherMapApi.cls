@@ -3,13 +3,9 @@ Objective: Learn how to call an external API, handle responses, and display data
 
 Challenge:
 
-Use the OpenWeatherMap API (or another public API like Dog API or Cat Facts API).
+Use the OpenWeatherMap API.
 Fetch weather data for a specific city or random facts and store the response in a custom Salesforce object.
 Display the data in a Lightning Web Component (LWC).
-Bonus:
-
-Add a dropdown menu in your LWC to select different cities or categories.
-Handle errors gracefully (e.g., show an error message if the API call fails).
 
 Steps to accomplish above:
 Created Remote Site settings in Salesforce to add the URL of the OpenWeatherMap public API: https://api.openweathermap.org
