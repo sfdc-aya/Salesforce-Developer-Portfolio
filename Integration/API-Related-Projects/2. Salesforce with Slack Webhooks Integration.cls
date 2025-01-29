@@ -1,5 +1,5 @@
 2. 
-1. Project - Post Data to APIs
+1. Project - Post Opportunity Stage Updates to Slack Channel with the help of Salesforce and Slack Webhooks Integration
 Objective: Learn how to send data from Salesforce to an external API.
 
 Challenge:
@@ -55,8 +55,12 @@ and I got the notification in my Slack channel
 
 
 
+2. Project - Post Data to APIs
+Objective: Learn how to send data from Salesforce to an external API.
 
+Challenge:
 
+Integrate Salesforce with Slack Webhooks.
+When a new Opportunity is created, post a message to a Slack channel or send an SMS notification.
+Use a trigger on the Opportunity object to invoke the callout.
 
-
-2. 
