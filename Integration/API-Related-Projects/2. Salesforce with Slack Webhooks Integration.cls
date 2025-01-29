@@ -8,7 +8,8 @@ Integrate Salesforce with Slack Webhooks.
 When a new Opportunity is created, post a message to a Slack channel or send an SMS notification.
 Use a trigger on the Opportunity object to invoke the callout.
 
-Created Slack Workspace
+Solution:
+Created Slack Workspace (Aya Inc.)
 Add Incoming Webhooks App
 then got the Webhooks URL from the Incoming Webhooks App
 then created a channel in my Workspace and added this channel to Incoming Webhooks App
@@ -55,12 +56,14 @@ and I got the notification in my Slack channel
 
 
 
-2. Project - Post Data to APIs
+2. Project - When Account Type = 'Prospect' & Industry = 'Healthcare' send this account details to the Slack Channel with the help of Salesforce and Slack Webhooks Integration
 Objective: Learn how to send data from Salesforce to an external API.
 
-Challenge:
+Challenge
 
 Integrate Salesforce with Slack Webhooks.
-When a new Opportunity is created, post a message to a Slack channel or send an SMS notification.
+When a new Opportunity is created, post a message to a Slack channel.
 Use a trigger on the Opportunity object to invoke the callout.
 
+Solution: 
+Created a new channel within the same Slack channel (Aya Inc.)
