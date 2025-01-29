@@ -73,7 +73,7 @@ Then created Async Apex Future Callout class:
 public with sharing class SlackAccountIntegration {
 	@future(callout=true)
     public static void postAccountUpdatesToSlack(String message){
-        String webHookUrl = 'https://hooks.slack.com/services/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';
+        String webHookUrl = 'https://hooks.slack.com/services/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';
         
         HttpRequest req = new HttpRequest();
         req.setEndpoint(webHookUrl);
@@ -84,16 +84,25 @@ public with sharing class SlackAccountIntegration {
         req.setBody(payload);
         
         Http http = new Http();
-        HttpResponse res = http.send(req);
+        HttpResponse res;
         
-        System.debug('Response failed'+ res.getStatusCode());
+        try {
+            res = http.send(req);
+            System.debug('Response Status Code: ' + res.getStatusCode());
+            System.debug('Response Body: ' + res.getBody());
+        } catch (Exception e) {
+            System.debug('Slack callout failed: ' + e.getMessage());
+        }
     }
 }
+
 
 Created AccountTrigger for the above logic in the requirements:
 
 trigger AccountTrigger on Account (after insert, after update) {
-    if(Trigger.isInsert && Trigger.isAfter || Trigger.IsUpdate && Trigger.IsAfter){
+    if((Trigger.isInsert && Trigger.isAfter) || (Trigger.IsUpdate && Trigger.IsAfter)){
+        System.debug('Account Trigger fired');
+        
         for(Account a : Trigger.new){
             if(a.Industry == 'Healthcare' && a.Type == 'Prospect'){
                 String message = 'Account '+a.Name+' created with Type = '+ a.Type+' and Industry = '+a.Industry+'. Please reach prioritize this Account and schedule a call with the customer ASAP, Thanks! ';
