@@ -67,3 +67,28 @@ Use a trigger on the Opportunity object to invoke the callout.
 
 Solution: 
 Created a new channel within the same Slack channel (Aya Inc.)
+Using the above Remote Site Setting as once you specify the URL no repetitive duplications are needed
+Then created Async Apex Future Callout class
+
+public with sharing class SlackAccountIntegration {
+	@future(callout=true)
+    public static void postAccountUpdatesToSlack(String message){
+        String webHookUrl = 'https://hooks.slack.com/services/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';
+        
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(webHookUrl);
+        req.setmethod('POST');
+        req.setHeader('Content-Type', 'application/json');
+        
+        String payload = '{"text":" ' + message + '"}';
+        req.setBody(payload);
+        
+        Http http = new Http();
+        HttpResponse res = http.send(req);
+        
+        System.debug('Response failed'+ res.getStatusCode());
+    }
+}
+
+
+
