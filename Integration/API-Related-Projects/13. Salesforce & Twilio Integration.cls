@@ -10,3 +10,6 @@ Bonus:
 
 Include dynamic data (e.g., Opportunity Name, Amount, or Stage) in the message or SMS.
 Create a custom setting to control which Opportunities trigger the integration (e.g., only when Stage = "Closed Won").
+
+Solution:
+1.Create Twilio Account, then  get your Account SID and Auth Token
