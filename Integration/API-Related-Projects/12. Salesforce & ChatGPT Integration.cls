@@ -1,6 +1,6 @@
 
-Remote site setting: 	https://api.openai.com
-Apex class ChatGPTIntegration:
+1.Remote site setting: 	https://api.openai.com
+2. Apex class ChatGPTIntegration:
 
 public class ChatGPTIntegration {
     @AuraEnabled(cacheable=false) // This annotation exposes the method to LWC
@@ -26,3 +26,17 @@ public class ChatGPTIntegration {
         }
     }
 }
+
+3. ChatGPT Component HTML LWC
+<template>
+    <lightning-card>
+            <lightning-input label="Ask ChatGPT" value={userInput} onchange={handleInputChange}></lightning-input>
+            <lightning-button label="Ask ChatGPT" onclick={handleSubmit}></lightning-button>
+            <template if:true={chatGPTResponse}>
+                <lightning-card title="ChatGPT Response">
+                    <p>{chatGPTResponse}</p>
+                </lightning-card>
+            </template>
+    </lightning-card>
+</template>
+
