@@ -57,5 +57,9 @@ trigger OpptyTrigger on Opportunity (after insert) {
             TwilioIntegration.sendSMS('+4156509635', message);
         }
     }
+
+7. Create Custom Settings
+
+
 }
 
