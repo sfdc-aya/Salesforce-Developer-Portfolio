@@ -58,8 +58,3 @@ trigger OpptyTrigger on Opportunity (after insert) {
         }
     }
 
-7. Create Custom Settings
-
-
-}
-
