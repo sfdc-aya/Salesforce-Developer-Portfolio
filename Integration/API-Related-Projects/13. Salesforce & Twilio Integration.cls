@@ -12,6 +12,34 @@ Include dynamic data (e.g., Opportunity Name, Amount, or Stage) in the message o
 Create a custom setting to control which Opportunities trigger the integration (e.g., only when Stage = "Closed Won").
 
 Solution:
-1.Create Twilio Account, then  get your Account SID(USf6c782bcbdb60a8dca0b61deacb736e2) and Auth Token()
-2.Create an Account within Twilio + phone number (here is mine: +18445484915)
+1.Create Twilio Account
+2.Create an Account within Twilio + phone number (here is mine: )
+3.then  get your Account SID() and Auth Token()
+4.Create Remote Site Setting in Salesforce (https://api.twilio.com)
+5.Create Apex Class: 
+public with sharing class TwilioIntegration {
+
+    public static void sendSMS(String phoneNumber, String message){
+        String accSID = 'yoursid';
+        String authToken = 'yourauthtoken';
+        String fromNumber = 'twilio_number';
+        
+        String endpoint = 'https://api.twilio.com/2010-04-01/Accounts/' + accSID + '/Messages.json';
+        
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(endpoint);
+        req.setMethod('POST');
+        req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+        
+        String body = 'To=' + EncodingUtil.urlEncode(phoneNumber, 'UTF-8') +
+                      '&From=' + EncodingUtil.urlEncode(fromNumber, 'UTF-8') +
+                      '&Body=' + EncodingUtil.urlEncode(message, 'UTF-8');
+        
+        req.setBody(body);
+        
+        Http http = new Http();
+        HttpResponse res = http.send(req);
+      
+    }
+}
 
