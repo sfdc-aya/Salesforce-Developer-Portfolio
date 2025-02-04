@@ -40,3 +40,25 @@ public class ChatGPTIntegration {
     </lightning-card>
 </template>
 
+4. ChatGPT Component JS LWC
+import { LightningElement } from 'lwc';
+import getChatGPTResponse from '@salesforce/apex/ChatGPTIntegration.getChatGPTResponse';
+
+export default class ChatGPTComponent extends LightningElement {
+   userInput = '';   // User's input
+    chatGPTResponse = '';  // ChatGPT response
+
+    handleInputChange(event) {
+        this.userInput = event.target.value; // Capture user input
+    }
+
+    async handleSubmit() {
+        // Call the Apex method and pass user input
+        try {
+            const response = await getChatGPTResponse({ userInput: this.userInput });
+            this.chatGPTResponse = response;  // Store the response
+        } catch (error) {
+            this.chatGPTResponse = 'Error: ' + error.body.message;
+        }
+    }
+}
