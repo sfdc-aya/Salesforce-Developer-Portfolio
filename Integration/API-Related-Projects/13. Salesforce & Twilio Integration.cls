@@ -43,3 +43,19 @@ public with sharing class TwilioIntegration {
     }
 }
 
+6. Create Apex Trigger
+trigger OpptyTrigger on Opportunity (after insert) {
+    for(Opportunity opp : Trigger.new) {
+        // Example: Trigger integration only when Stage is 'Closed Won'
+        if (opp.StageName == 'Closed Won') {
+            String message = 'Opportunity ' + opp.Name + ' is Closed Won with Amount ' + opp.Amount;
+            
+            // Post to Slack
+            //SlackIntegration.postToSlack(message);
+            
+            // Or send an SMS via Twilio
+            TwilioIntegration.sendSMS('+4156509635', message);
+        }
+    }
+}
+
