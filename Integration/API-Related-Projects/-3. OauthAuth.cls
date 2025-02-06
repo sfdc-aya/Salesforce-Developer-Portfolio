@@ -10,3 +10,12 @@ Bonus:
 
 Implement a search bar in the LWC to search repositories by name or description.
 Store repository details (e.g., name, stars, forks) in Salesforce for future reference.
+
+create Github OAuth
+create Named Credentials
+create External Credentials
+create Principal
+create AuthProvider
+create Permission Set
+create Apex class
+create LWC
