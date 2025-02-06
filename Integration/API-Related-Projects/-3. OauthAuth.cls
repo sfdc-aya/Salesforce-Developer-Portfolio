@@ -75,3 +75,36 @@ create LWC HTMl
     </lightning-card>
 </template>
 
+create LWC JS
+import { LightningElement, wire, track } from 'lwc';
+import getRepositories from '@salesforce/apex/GitHubIntegration.getRepositories'; // Correct import
+
+export default class GithubRepos extends LightningElement {
+    @track repos = [];
+    @track filteredRepos = [];
+
+    columns = [
+        { label: 'Name', fieldName: 'url', type: 'url', typeAttributes: { label: { fieldName: 'name' } } },
+        { label: 'Stars', fieldName: 'stars', type: 'number' },
+        { label: 'Forks', fieldName: 'forks', type: 'number' }
+    ];
+
+    @wire(getRepositories)
+    wiredRepos({ error, data }) {
+        if (data) {
+            this.repos = data;
+            this.filteredRepos = data;
+        } else if (error) {
+            console.error('Error fetching repositories:', error);
+        }
+    }
+
+    handleSearch(event) {
+        const searchKey = event.target.value.toLowerCase();
+        this.filteredRepos = this.repos.filter(repo =>
+            repo.name.toLowerCase().includes(searchKey)
+        );
+    }
+}
+
+
