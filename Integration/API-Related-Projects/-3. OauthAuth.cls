@@ -62,4 +62,16 @@ public with sharing class GitHubIntegration {
     }
 }
 
-create LWC
+create LWC HTMl
+<template>
+    <lightning-card title="GitHub Repositories" icon-name="utility:knowledge_base">
+        <div class="slds-m-around_medium">
+            <lightning-input type="search" label="Search Repository" onchange={handleSearch}></lightning-input>
+            <template if:true={repos}>
+                <lightning-datatable key-field="id" data={filteredRepos} columns={columns}>
+                </lightning-datatable>
+            </template>
+        </div>
+    </lightning-card>
+</template>
+
